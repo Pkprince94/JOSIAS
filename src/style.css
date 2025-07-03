@@ -1,0 +1,101 @@
+.p{
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+
+}
+.p h3{
+   display: inline-block;
+   animation: defilement 20s linear infinite;
+   font-size: 22PX;
+   color: blue;
+}
+@keyframes defilement  {
+    0%{
+        transform: translateX(100%);}
+        {100%
+             transform: translateX(-100%);
+        }
+    
+    
+}
+
+
+
+.PJ{
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: 16px;
+    animation: defileDroite 15s linear infinite;
+    color: #fff; /* texte en blanc pour bon contraste */
+    background-color: #e91e63; /* rose vif harmonisé avec ton footer/navbar */
+    padding: 10px 0;
+    text-align: center;
+    font-weight: 500;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}@keyframes defileDroite {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+
+.h{
+    font-family: 'poppins', sans-serif;
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: #1e1e1e;
+    text-align: center;
+    margin-top: 50px;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+}
+.ns {
+    color: #e91e63; /* rose foncé pour s'accorder avec le footer */
+    font-style: italic;
+    font-weight: bold;
+    font-size: 1.8rem;
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 2px #003366; /* ombre bleu foncé */
+    transition: color 0.3s ease;
+}
+
+.ns:hover {
+    color: #007bff; /* bleu vibrant au survol */
+    text-shadow: 1px 1px 3px #ff69b4; /* rose vif en hover */
+    cursor: pointer;
+}
+
+.footer{
+  background-color: #d26c8f;
+  color: white;
+  text-align: center;
+  padding: 20px;
+
+}
+.custom-navbar {
+    background: linear-gradient(to right,#d96b99,#1c2b4a);
+    color: white;
+}
+.btn-kismoto-link {
+  display: inline-block;
+  background-color: #007bff; /* Bleu navbar */
+  color: white;
+  padding: 12px 24px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+}
+
+.btn-kismoto-link:hover {
+  background-color: #e91e63; /* Rose sur hover */
+  box-shadow: 0 6px 14px rgba(233, 30, 99, 0.35);
+  transform: scale(1.05);
+  color: white;
+}
