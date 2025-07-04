@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // ⬅️ ajout
-import NavSlide from './Components/NavSlide';
+import NavSlide from './NavSlide';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const HistoriqueAdmin = () => {
