@@ -8,7 +8,7 @@ const Home = () => {
   useEffect(() => {
     AOS.init({ duration: 1000 });
   }, []);
-
+// la partie qui me fait trop bosser
   return (
 
     <div className="Navbar">
