@@ -20,18 +20,21 @@ function Publier() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const formData = new FormData();
     for (let key in product) {
       formData.append(key, product[key]);
     }
 
-    const res = await fetch('http://Application_web_boutique_de_moto/models/Publier.php', {
+    // ✅ URL du backend hébergé dans /www/models/Publier.php
+    const res = await fetch('https://princekismotoshop.alwaysdata.net/models/Publier.php', {
       method: 'POST',
       body: formData,
     });
 
     const data = await res.json();
     alert(data.message);
+
     if (res.ok) {
       navigate('/admin/products');
     }
@@ -47,17 +50,17 @@ function Publier() {
             <form onSubmit={handleSubmit} encType="multipart/form-data">
               <div className="mb-3">
                 <label htmlFor="nom" className="form-label">Nom du produit</label>
-                <input type="text" name="nom" id="nom" className="form-control" placeholder="Nom" onChange={handleChange} required />
+                <input type="text" name="nom" id="nom" className="form-control" onChange={handleChange} required />
               </div>
 
               <div className="mb-3">
                 <label htmlFor="description" className="form-label">Description</label>
-                <textarea name="description" id="description" className="form-control" placeholder="Description" onChange={handleChange} required />
+                <textarea name="description" id="description" className="form-control" onChange={handleChange} required />
               </div>
 
               <div className="mb-3">
                 <label htmlFor="prix" className="form-label">Prix</label>
-                <input type="number" name="prix" id="prix" className="form-control" placeholder="Prix" onChange={handleChange} required />
+                <input type="number" name="prix" id="prix" className="form-control" onChange={handleChange} required />
               </div>
 
               <div className="mb-3">

@@ -35,11 +35,12 @@ function Connexion() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const baseURL = "https://princekismotoshop.alwaysdata.net/models";
     const endpoint = isRegister
       ? (formData.role === 'admin'
-          ? 'http://localhost/Application_web_boutique_de_moto/models/enregistrement_admin.php'
-          : 'http://localhost/Application_web_boutique_de_moto/models/enregistrement_utilisateurs.php')
-      : 'http://localhost/Application_web_boutique_de_moto/models/login.php';
+          ? `${baseURL}/enregistrement_admin.php`
+          : `${baseURL}/enregistrement_utilisateurs.php`)
+      : `${baseURL}/login.php`;
 
     let payload = {
       email: formData.email,
@@ -100,7 +101,7 @@ function Connexion() {
             navigate("/afficher");
           }
         } else {
-          setIsRegister(false); // Redirige vers la connexion après inscription
+          setIsRegister(false);
         }
       }
     } catch (err) {

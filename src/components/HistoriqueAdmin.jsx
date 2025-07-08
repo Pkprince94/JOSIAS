@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // ⬅️ ajout
+import { useNavigate } from 'react-router-dom';
 import NavSlide from './NavSlide';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -7,7 +7,7 @@ const HistoriqueAdmin = () => {
     const [commandes, setCommandes] = useState([]);
     const [loading, setLoading] = useState(true);
     const [erreur, setErreur] = useState("");
-    const navigate = useNavigate(); // ⬅️ Hook de navigation
+    const navigate = useNavigate();
 
     useEffect(() => {
         const utilisateurStr = sessionStorage.getItem("utilisateur");
@@ -25,8 +25,8 @@ const HistoriqueAdmin = () => {
             return;
         }
 
-        // ✅ Si tout est bon, on charge les commandes
-        fetch("http://localhost/Application_web_boutique_de_moto/models/AdminRegardderCommande.php", {
+        // ✅ Remplacer ici le lien local par le lien d’hébergement
+        fetch("https://princekismotoshop.alwaysdata.net/models/AdminRegardderCommande.php", {
             method: "GET",
             credentials: "include"
         })

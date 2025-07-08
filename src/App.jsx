@@ -14,7 +14,6 @@ import Connexion from './components/Connexion';
 import HistoriqueAdmin from './components/HistoriqueAdmin';
 
 const App = () => {
-  return (
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />

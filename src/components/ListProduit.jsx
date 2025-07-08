@@ -13,12 +13,13 @@ export default function ListProduit() {
   useEffect(() => {
     const role = sessionStorage.getItem("role");
     if (role !== "admin") {
+      // navigate("/"); // tu peux rediriger si besoin
     }
   }, [navigate]);
 
   const fetchProduits = async () => {
     try {
-      const res = await fetch('http://localhost/Application_web_boutique_de_moto/models/Affichep.php');
+      const res = await fetch('https://princekismotoshop.alwaysdata.net/models/Affichep.php');
       const json = await res.json();
       if (json.success) {
         setProduits(json.data);
@@ -40,7 +41,7 @@ export default function ListProduit() {
   const handleDelete = async (id) => {
     if (!window.confirm('Supprimer ce produit ?')) return;
     try {
-      const res = await fetch('http://localhost/Application_web_boutique_de_moto/models/Supprimer.php', {
+      const res = await fetch('https://princekismotoshop.alwaysdata.net/models/Supprimer.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id }),
@@ -93,7 +94,7 @@ export default function ListProduit() {
                     <td>
                       {photo ? (
                         <img
-                          src={`http://localhost/Application_web_boutique_de_moto/photo/${photo}`}
+                          src={`https://princekismotoshop.alwaysdata.net/photo/${photo}`}
                           alt={nom}
                           style={{ width: '60px', height: 'auto' }}
                         />

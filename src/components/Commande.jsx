@@ -54,7 +54,7 @@ const Commande = () => {
 
     const commande = {
       user_id: utilisateur.id,
-      produit_id: produit.id, // ✅ Assure-toi que ton backend PHP attend bien ce nom
+      produit_id: produit.id,
       nom_client: utilisateur.nom,
       adresse,
       quantite: Number(quantite),
@@ -64,7 +64,7 @@ const Commande = () => {
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost/Application_web_boutique_de_moto/models/commande.php", {
+      const res = await fetch("https://princekismotoshop.alwaysdata.net/models/commande.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(commande),

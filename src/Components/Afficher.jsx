@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Heart, ThumbsDown, ThumbsUp } from "lucide-react";
+import { ThumbsDown, ThumbsUp } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 
@@ -9,12 +9,10 @@ const ProductCard = ({ product }) => {
   const [dislikes, setDislikes] = useState(product.dislikes || 0);
 
   const handleCommanderClick = () => {
-      const utilisateurStr = sessionStorage.getItem("utilisateur");
+    const utilisateurStr = sessionStorage.getItem("utilisateur");
 
-    // 🧠 Stocke le produit temporairement
     sessionStorage.setItem("produit_a_commander", JSON.stringify(product));
 
-    // 🛑 Redirige vers /connexion si l'utilisateur n'est pas connecté
     if (!utilisateurStr) {
       alert("Veuillez vous connecter pour passer une commande.");
       navigate("/connexion");
@@ -23,13 +21,13 @@ const ProductCard = ({ product }) => {
 
     const utilisateur = JSON.parse(utilisateurStr);
 
-    // ✅ Redirige vers /commande SEULEMENT si c'est un utilisateur
     if (utilisateur.role === "utilisateur") {
       navigate("/commande", { state: { produit: product } });
     } else {
       alert("Seuls les utilisateurs peuvent commander.");
     }
   };
+
   const handleVote = async (type) => {
     const utilisateur = JSON.parse(sessionStorage.getItem("utilisateur"));
     if (!utilisateur) {
@@ -38,7 +36,7 @@ const ProductCard = ({ product }) => {
     }
 
     try {
-      const res = await fetch("http://localhost/Application_web_boutique_de_moto/models/LikeDislike.php", {
+      const res = await fetch("https://princekismotoshop.alwaysdata.net/models/LikeDislike.php", {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
@@ -64,7 +62,7 @@ const ProductCard = ({ product }) => {
         src={
           product.photo?.startsWith("http")
             ? product.photo
-            : `http://localhost/Application_web_boutique_de_moto/photo/${product.photo}`
+            : `https://princekismotoshop.alwaysdata.net/photo/${product.photo}`
         }
         className="card-img-top"
         alt={product.nom}
@@ -80,9 +78,8 @@ const ProductCard = ({ product }) => {
         <p className="card-text" style={{ fontSize: "0.9rem" }}>
           {product.description}
         </p>
-        <p className="fw-bold text-primary">
-          {parseFloat(product.prix).toFixed(0)} Fc
-        </p>
+        <p className="fw-bold text-primary">{parseFloat(product.prix).toFixed(0)} Fc</p>
+
         <div className="d-flex justify-content-between align-items-center mb-2">
           <button onClick={() => handleVote("like")} className="btn btn-sm btn-outline-primary">
             <ThumbsUp size={16} /> {likes}
@@ -91,10 +88,8 @@ const ProductCard = ({ product }) => {
             <ThumbsDown size={16} /> {dislikes}
           </button>
         </div>
-        <button
-          className="btn btn-outline-success btn-sm w-100"
-          onClick={handleCommanderClick}
-        >
+
+        <button className="btn btn-outline-success btn-sm w-100" onClick={handleCommanderClick}>
           Commander
         </button>
       </div>
@@ -107,7 +102,7 @@ const Afficher = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost/Application_web_boutique_de_moto/models/Affichep.php")
+    fetch("https://princekismotoshop.alwaysdata.net/models/Affichep.php")
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {

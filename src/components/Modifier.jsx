@@ -19,18 +19,16 @@ const Modifier = () => {
 
   const [errors, setErrors] = useState({});
 
-  // ✅ Vérification du rôle admin (une seule fois)
   useEffect(() => {
     const role = sessionStorage.getItem("role");
     if (role !== "admin") {
-      // alert("Accès refusé : vous n'êtes pas admin");
-      // navigate("/");
+      // navigate("/"); // désactivé si tu veux tester librement
     }
   }, [navigate]);
 
-  // ✅ Chargement des données du produit
+  // ✅ Charger les données du produit depuis AlwaysData
   useEffect(() => {
-    fetch(`http://localhost/Application_web_boutique_de_moto/models/Affichep.php?id=${id}`)
+    fetch(`https://princekismotoshop.alwaysdata.net/models/Affichep.php?id=${id}`)
       .then(res => res.json())
       .then(data => {
         if (data.success) {
@@ -93,7 +91,7 @@ const Modifier = () => {
     }
 
     try {
-      const res = await fetch("http://localhost/Application_web_boutique_de_moto/models/Modifier.php", {
+      const res = await fetch("https://princekismotoshop.alwaysdata.net/models/Modifier.php", {
         method: "POST",
         body: data,
       });
@@ -155,7 +153,7 @@ const Modifier = () => {
             {formData.anciennePhoto && (
               <div className="mt-2">
                 <img
-                  src={`http://localhost/Application_web_boutique_de_moto/photo/${formData.anciennePhoto}`}
+                  src={`https://princekismotoshop.alwaysdata.net/photo/${formData.anciennePhoto}`}
                   alt="Photo actuelle"
                   style={{ width: "100px", height: "auto" }}
                 />

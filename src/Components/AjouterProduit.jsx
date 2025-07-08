@@ -5,11 +5,10 @@ import NavSlide from "./NavSlide";
 const AjouterProduit = () => {
     const navigate = useNavigate();
 
-    // Vérification du rôle admin au chargement du composant
     useEffect(() => {
         const role = sessionStorage.getItem("role");
         if (role !== "admin") {
-            // navigate("/"); // Ou autre page
+            // navigate("/");
         }
     }, [navigate]);
 
@@ -19,7 +18,7 @@ const AjouterProduit = () => {
         prix: "",
         categorie: "moto",
         photo: null,
-        quantite_stock: "", //  Nouveau champ
+        quantite_stock: "",
     });
 
     const [errors, setErrors] = useState({});
@@ -36,9 +35,7 @@ const AjouterProduit = () => {
 
     const validateForm = () => {
         let newErrors = {};
-        if (!formData.nom) {
-            newErrors.nom = "Le nom du produit est obligatoire.";
-        }
+        if (!formData.nom) newErrors.nom = "Le nom du produit est obligatoire.";
         if (!formData.prix) {
             newErrors.prix = "Le prix est obligatoire.";
         } else if (isNaN(parseFloat(formData.prix)) || parseFloat(formData.prix) <= 0) {
@@ -62,13 +59,13 @@ const AjouterProduit = () => {
         data.append("description", formData.description);
         data.append("prix", formData.prix);
         data.append("categorie", formData.categorie);
-        data.append("quantite_stock", formData.quantite_stock); //  Ajout du champ ici
+        data.append("quantite_stock", formData.quantite_stock);
         if (formData.photo) {
             data.append("photo", formData.photo);
         }
 
         try {
-            const res = await fetch("http://localhost/Application_web_boutique_de_moto/models/Ajoute.php", {
+            const res = await fetch("https://princekismotoshop.alwaysdata.net/models/Ajoute.php", {
                 method: "POST",
                 body: data,
             });
@@ -81,7 +78,7 @@ const AjouterProduit = () => {
                     prix: "",
                     categorie: "moto",
                     photo: null,
-                    quantite_stock: "", //  Reset aussi
+                    quantite_stock: "",
                 });
                 setErrors({});
             } else {
@@ -101,7 +98,6 @@ const AjouterProduit = () => {
             <div className="container my-5" style={{ maxWidth: "500px" }}>
                 <h2 className="mb-4 text-center">Ajouter un produit</h2>
                 <form onSubmit={handleSubmit}>
-
                     <div className="mb-3">
                         <label htmlFor="nom" className="form-label">Nom :</label>
                         <input
@@ -143,7 +139,6 @@ const AjouterProduit = () => {
                         {errors.prix && <div className="text-danger">{errors.prix}</div>}
                     </div>
 
-                    {/*  Nouveau champ pour la quantité en stock */}
                     <div className="mb-3">
                         <label htmlFor="quantite_stock" className="form-label">Quantité en stock :</label>
                         <input

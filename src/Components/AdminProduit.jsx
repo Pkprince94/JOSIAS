@@ -10,15 +10,15 @@ const AdminProduits = () => {
     image: null,
   });
 
-  // Charger les produits existants
+  const API_BASE = "https://princekismotoshop.alwaysdata.net/api";
+
   useEffect(() => {
-    fetch('http://localhost/api/produits.api.php?action=afficher')
+    fetch(`${API_BASE}/produits.api.php?action=afficher`)
       .then(res => res.json())
       .then(data => setProduits(data))
       .catch(err => console.error("Erreur de chargement :", err));
   }, []);
 
-  // Gérer les changements dans le formulaire
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     if (name === 'image') {
@@ -28,7 +28,6 @@ const AdminProduits = () => {
     }
   };
 
-  // Ajouter un produit
   const handleSubmit = async (e) => {
     e.preventDefault();
     const form = new FormData();
@@ -36,10 +35,10 @@ const AdminProduits = () => {
     form.append('prix', formData.prix);
     form.append('description', formData.description);
     form.append('categorie', formData.categorie);
-    form.append('image', formData.image);
+    if (formData.image) form.append('image', formData.image);
 
     try {
-      const res = await fetch('http://localhost/api/produits.api.php?action=ajouter', {
+      const res = await fetch(`${API_BASE}/produits.api.php?action=ajouter`, {
         method: 'POST',
         body: form,
       });
@@ -47,8 +46,8 @@ const AdminProduits = () => {
       alert(result.message);
 
       if (result.success) {
-        // Recharger les produits
-        const updated = await fetch('http://localhost/api/produits.api.php?action=afficher');
+        // Recharger la liste
+        const updated = await fetch(`${API_BASE}/produits.api.php?action=afficher`);
         const data = await updated.json();
         setProduits(data);
 
@@ -62,6 +61,7 @@ const AdminProduits = () => {
       }
     } catch (error) {
       console.error("Erreur lors de l'ajout :", error);
+      alert("Erreur réseau ou serveur");
     }
   };
 
@@ -69,7 +69,6 @@ const AdminProduits = () => {
     <div className="container my-5">
       <h2 className="mb-4 text-center">Gestion des Produits</h2>
 
-      {/* Formulaire d'ajout */}
       <form onSubmit={handleSubmit} encType="multipart/form-data" className="border p-4 rounded shadow-sm mb-5 bg-light">
         <h4 className="mb-3">Ajouter un produit</h4>
 
@@ -136,14 +135,13 @@ const AdminProduits = () => {
         <button type="submit" className="btn btn-success w-100">Publier</button>
       </form>
 
-      {/* Liste des produits */}
       <h4 className="mb-3">Produits existants</h4>
       <div className="row">
         {produits.map(prod => (
           <div className="col-md-4 mb-4" key={prod.id}>
             <div className="card shadow-sm h-100">
               <img
-                src={`http://localhost/photos/${prod.photo}`}
+                src={`https://princekismotoshop.alwaysdata.net/photos/${prod.photo}`}
                 className="card-img-top"
                 alt={prod.nom}
                 style={{ height: '200px', objectFit: 'cover' }}
