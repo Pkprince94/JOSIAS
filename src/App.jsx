@@ -14,6 +14,7 @@ import Connexion from './components/Connexion';
 import HistoriqueAdmin from './components/HistoriqueAdmin';
 
 const App = () => {
+  return (  // ✅ ICI, le return manquait
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
