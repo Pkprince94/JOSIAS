@@ -39,7 +39,7 @@ function Publier() {
       navigate('/admin/products');
     }
   };
-
+  //mon project c du ouff
   return (
     <>
       <NavBarProduit />
