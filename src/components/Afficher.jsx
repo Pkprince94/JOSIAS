@@ -3,6 +3,7 @@ import { ThumbsDown, ThumbsUp } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 
+// ouf
 const ProductCard = ({ product }) => {
   const navigate = useNavigate();
   const [likes, setLikes] = useState(product.likes || 0);
