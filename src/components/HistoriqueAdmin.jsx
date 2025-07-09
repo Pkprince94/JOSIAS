@@ -25,7 +25,7 @@ const HistoriqueAdmin = () => {
             return;
         }
 
-        // ✅ Remplacer ici le lien local par le lien d’hébergement
+        //  Remplacer ici le lien local par le lien d’hébergement
         fetch("https://princekismotoshop.alwaysdata.net/models/AdminRegardderCommande.php", {
             method: "GET",
             credentials: "include"

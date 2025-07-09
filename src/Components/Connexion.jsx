@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { FaSun, FaMoon } from 'react-icons/fa';
+import { FaSun, FaMoon, FaEye, FaEyeSlash } from 'react-icons/fa';
 
 function Connexion() {
   const [darkMode, setDarkMode] = useState(false);
   const [isRegister, setIsRegister] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
     mot_de_passe: '',
@@ -154,13 +155,23 @@ function Connexion() {
 
             <div className="mb-3">
               <label className="form-label">Mot de passe</label>
-              <input
-                type="password"
-                name="mot_de_passe"
-                className="form-control"
-                onChange={handleChange}
-                required
-              />
+              <div className="input-group">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  name="mot_de_passe"
+                  className="form-control"
+                  onChange={handleChange}
+                  required
+                />
+                <button
+                  type="button"
+                  className="btn btn-outline-secondary"
+                  onClick={() => setShowPassword(!showPassword)}
+                  tabIndex={-1}
+                >
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </button>
+              </div>
             </div>
 
             {isRegister && (
