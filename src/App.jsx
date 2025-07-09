@@ -14,7 +14,7 @@ import Connexion from './components/Connexion';
 import HistoriqueAdmin from './components/HistoriqueAdmin';
 
 const App = () => {
-  return (  // ✅ ICI, le return manquait
+  return (
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
@@ -25,7 +25,7 @@ const App = () => {
         <Route path="/ajouterproduit" element={<AjouterProduit />} />
         <Route path="/listproduit" element={<ListProduit />} />
         <Route path="/modifier/:id" element={<Modifier />} />
-        <Route path="/historiqueAdmin" element={<HistoriqueAdmin />} />
+        <Route path="/historiqueadmin" element={<HistoriqueAdmin />} />
 
         {/* Route protégée */}
         <Route
@@ -36,6 +36,9 @@ const App = () => {
             </PrivateRouteUtilisateur>
           }
         />
+
+        {/* Optionnel : alias avec majuscules (pas recommandé) */}
+        {/* <Route path="/Afficher" element={<Afficher />} /> */}
       </Routes>
     </Router>
   );
