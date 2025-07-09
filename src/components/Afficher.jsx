@@ -3,7 +3,6 @@ import { ThumbsDown, ThumbsUp } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 
-// ouf
 const ProductCard = ({ product }) => {
   const navigate = useNavigate();
   const [likes, setLikes] = useState(product.likes || 0);
@@ -12,6 +11,7 @@ const ProductCard = ({ product }) => {
   const handleCommanderClick = () => {
     const utilisateurStr = sessionStorage.getItem("utilisateur");
 
+    console.log("👤 Session utilisateur avant commande:", utilisateurStr);
     sessionStorage.setItem("produit_a_commander", JSON.stringify(product));
 
     if (!utilisateurStr) {
@@ -37,14 +37,21 @@ const ProductCard = ({ product }) => {
     }
 
     try {
-      const res = await fetch("https://princekismotoshop.alwaysdata.net/models/LikeDislike.php", {
+      const url = "https://princekismotoshop.alwaysdata.net/models/LikeDislike.php";
+      console.log("📤 Envoi du vote à :", url);
+      console.log("📝 Payload :", { produit_id: product.id, type });
+
+      const res = await fetch(url, {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ produit_id: product.id, type }),
       });
 
+      console.log("📥 Status HTTP:", res.status);
       const data = await res.json();
+      console.log("📥 Données reçues:", data);
+
       if (data.success) {
         setLikes(data.stats.likes);
         setDislikes(data.stats.dislikes);
@@ -52,7 +59,7 @@ const ProductCard = ({ product }) => {
         alert(data.message || "Erreur lors du vote");
       }
     } catch (err) {
-      console.error("Erreur réseau:", err);
+      console.error("❌ Erreur réseau ou serveur:", err);
       alert("Erreur serveur");
     }
   };
@@ -103,9 +110,16 @@ const Afficher = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("https://princekismotoshop.alwaysdata.net/models/Affichep.php")
-      .then((res) => res.json())
+    const url = "https://princekismotoshop.alwaysdata.net/models/Affichep.php";
+    console.log("🔄 Chargement des produits depuis :", url);
+
+    fetch(url)
+      .then((res) => {
+        console.log("📡 Status HTTP Produits :", res.status);
+        return res.json();
+      })
       .then((data) => {
+        console.log("📦 Produits reçus :", data);
         if (data.success) {
           setProducts(data.data);
         } else {
@@ -114,7 +128,7 @@ const Afficher = () => {
         setLoading(false);
       })
       .catch((err) => {
-        console.error("Erreur lors du chargement des produits :", err);
+        console.error("❌ Erreur lors du chargement des produits :", err);
         alert("Erreur de chargement.");
         setLoading(false);
       });
