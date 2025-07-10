@@ -40,14 +40,14 @@ const ProductCard = ({ product }) => {
       const url = "https://princekismotoshop.alwaysdata.net/models/LikeDislike.php";
       console.log("📤 Envoi du vote à :", url);
       console.log("📝 Payload :", { produit_id: product.id, type });
-
+      //  la page
       const res = await fetch(url, {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ produit_id: product.id, type }),
       });
-
+     
       console.log("📥 Status HTTP:", res.status);
       const data = await res.json();
       console.log("📥 Données reçues:", data);
@@ -59,7 +59,7 @@ const ProductCard = ({ product }) => {
         alert(data.message || "Erreur lors du vote");
       }
     } catch (err) {
-      console.error("❌ Erreur réseau ou serveur:", err);
+      console.error(" Erreur réseau ou serveur:", err);
       alert("Erreur serveur");
     }
   };
