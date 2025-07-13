@@ -9,7 +9,7 @@ const Registre = () => {
     telephone: '',
     adresse: ''
   });
-
+// lll
   const handleChange = (e) => {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
