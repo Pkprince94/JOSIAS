@@ -89,13 +89,14 @@ const Modifier = () => {
     if (formData.photo) {
       data.append("photo", formData.photo);
     }
-    // ouf
+
     try {
       const res = await fetch("https://princekismotoshop.alwaysdata.net/models/Modifier.php", {
         method: "POST",
         body: data,
       });
       const result = await res.json();
+   
       if (result.success) {
         alert("Produit modifié avec succès !");
         navigate("/ListProduit");
