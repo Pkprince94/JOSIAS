@@ -18,31 +18,41 @@ const HistoriqueAdmin = () => {
             return;
         }
 
-        const utilisateur = JSON.parse(utilisateurStr);
+        let utilisateur;
+        try {
+            utilisateur = JSON.parse(utilisateurStr);
+        } catch (e) {
+            sessionStorage.removeItem("utilisateur");
+            alert("Session utilisateur invalide. Veuillez vous reconnecter.");
+            navigate("/connexion");
+            return;
+        }
+
         if (utilisateur.role !== "admin") {
             alert("Accès réservé aux administrateurs.");
             navigate("/connexion");
             return;
         }
 
-        //  Remplacer ici le lien local par le lien d’hébergement
         fetch("https://princekismotoshop.alwaysdata.net/models/AdminRegardderCommande.php", {
             method: "GET",
-            credentials: "include"
+            credentials: "include", // Indispensable pour envoyer les cookies de session
+            headers: {
+                "Content-Type": "application/json"
+            }
         })
         .then(res => res.json())
         .then(data => {
             if (data.success) {
                 setCommandes(data.commandes);
             } else {
-                setErreur(data.message || "Erreur inconnue");
+                setErreur(data.message || "Erreur inconnue.");
             }
-            setLoading(false);
         })
-        .catch((err) => {
+        .catch(err => {
             setErreur("Erreur réseau ou serveur : " + err.message);
-            setLoading(false);
-        });
+        })
+        .finally(() => setLoading(false));
     }, [navigate]);
 
     return (

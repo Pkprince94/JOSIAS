@@ -1,21 +1,44 @@
 import React, { useState, useEffect } from "react";
-import '../style.css';
+import { useNavigate } from "react-router-dom";
 
 export default function NavSlide() {
   const [darkMode, setDarkMode] = useState(false);
+  const [showSidebar, setShowSidebar] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     document.body.className = darkMode ? "bg-dark text-light" : "bg-light text-dark";
   }, [darkMode]);
 
+  const handleLogout = () => {
+    const confirmed = window.confirm("Êtes-vous sûr de vouloir vous déconnecter ?");
+    if (confirmed) {
+      sessionStorage.removeItem("utilisateur");
+      sessionStorage.removeItem("role");
+      navigate("/");
+    }
+  };
+
   return (
-    <div className="d-flex">
+    <div className="d-flex flex-column flex-md-row min-vh-100">
+      {/* Bouton Menu Mobile */}
+      <div className="d-md-none p-2 bg-light border-bottom">
+        <button
+          className="btn btn-outline-secondary"
+          onClick={() => setShowSidebar(!showSidebar)}
+        >
+          ☰ Menu
+        </button>
+      </div>
+
       {/* Sidebar */}
       <div
-        className={`d-flex flex-column flex-shrink-0 p-3 ${darkMode ? 'bg-dark text-light' : 'bg-light'}`}
-        style={{ width: '250px', height: '100vh', position: 'fixed' }}
+        className={`${
+          showSidebar ? "d-flex" : "d-none"
+        } d-md-flex flex-column p-3 ${darkMode ? "bg-dark text-light" : "bg-light"}`}
+        style={{ width: "100%", maxWidth: "250px", minHeight: "100vh" }}
       >
-        <a href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-decoration-none">
+        <a href="/" className="d-flex align-items-center mb-3 text-decoration-none">
           <span className="fs-4 fw-bold">Page Admin Prince</span>
         </a>
         <hr />
@@ -45,6 +68,14 @@ export default function NavSlide() {
               <i className="bi bi-clock-history me-2"></i> Historique commandes
             </a>
           </li>
+          <li>
+            <button
+              onClick={handleLogout}
+              className="nav-link btn btn-link text-start text-danger mt-2"
+            >
+              <i className="bi bi-box-arrow-right me-2"></i> Se déconnecter
+            </button>
+          </li>
         </ul>
         <hr />
         <div className="form-check form-switch">
@@ -62,7 +93,7 @@ export default function NavSlide() {
       </div>
 
       {/* Main Content */}
-      <div style={{ marginLeft: '250px', padding: '20px', width: '100%' }}>
+      <div className="flex-grow-1 p-4">
         <h3>Bienvenue Admin Prince Kisunzu Josias</h3>
         <p>Voici le contenu de la table des produits et commandes.</p>
       </div>

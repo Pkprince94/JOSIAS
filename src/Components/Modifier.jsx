@@ -22,15 +22,14 @@ const Modifier = () => {
   useEffect(() => {
     const role = sessionStorage.getItem("role");
     if (role !== "admin") {
-      // navigate("/"); // désactivé si tu veux tester librement
+      // navigate("/");
     }
   }, [navigate]);
 
-  // ✅ Charger les données du produit depuis AlwaysData
   useEffect(() => {
     fetch(`https://princekismotoshop.alwaysdata.net/models/Affichep.php?id=${id}`)
-      .then(res => res.json())
-      .then(data => {
+      .then((res) => res.json())
+      .then((data) => {
         if (data.success) {
           const produit = data.data;
           setFormData({
@@ -47,7 +46,7 @@ const Modifier = () => {
           navigate("/");
         }
       })
-      .catch(err => {
+      .catch((err) => {
         console.error("Erreur de chargement :", err);
         alert("Erreur lors du chargement des données.");
       });
@@ -96,7 +95,7 @@ const Modifier = () => {
         body: data,
       });
       const result = await res.json();
-   
+
       if (result.success) {
         alert("Produit modifié avec succès !");
         navigate("/ListProduit");
@@ -112,70 +111,73 @@ const Modifier = () => {
   };
 
   return (
-    <>
+    <div className="d-flex flex-column flex-md-row min-vh-100">
       <NavSlide />
-      <div className="container my-5" style={{ maxWidth: "600px" }}>
-        <h2 className="mb-4 text-center">Modifier un produit</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <label className="form-label">Nom :</label>
-            <input type="text" name="nom" className="form-control" value={formData.nom} onChange={handleChange} />
-            {errors.nom && <div className="text-danger">{errors.nom}</div>}
-          </div>
 
-          <div className="mb-3">
-            <label className="form-label">Description :</label>
-            <textarea name="description" className="form-control" rows="3" value={formData.description} onChange={handleChange} />
-          </div>
+      <div className="container-fluid p-4">
+        <div className="mx-auto" style={{ maxWidth: "600px" }}>
+          <h2 className="mb-4 text-center">Modifier un produit</h2>
+          <form onSubmit={handleSubmit}>
+            <div className="mb-3">
+              <label className="form-label">Nom :</label>
+              <input type="text" name="nom" className="form-control" value={formData.nom} onChange={handleChange} />
+              {errors.nom && <div className="text-danger">{errors.nom}</div>}
+            </div>
 
-          <div className="mb-3">
-            <label className="form-label">Prix (Fc) :</label>
-            <input type="number" name="prix" className="form-control" value={formData.prix} onChange={handleChange} />
-            {errors.prix && <div className="text-danger">{errors.prix}</div>}
-          </div>
+            <div className="mb-3">
+              <label className="form-label">Description :</label>
+              <textarea name="description" className="form-control" rows="3" value={formData.description} onChange={handleChange} />
+            </div>
 
-          <div className="mb-3">
-            <label className="form-label">Quantité en stock :</label>
-            <input type="number" name="quantite_stock" className="form-control" value={formData.quantite_stock} onChange={handleChange} />
-            {errors.quantite_stock && <div className="text-danger">{errors.quantite_stock}</div>}
-          </div>
+            <div className="mb-3">
+              <label className="form-label">Prix (Fc) :</label>
+              <input type="number" name="prix" className="form-control" value={formData.prix} onChange={handleChange} />
+              {errors.prix && <div className="text-danger">{errors.prix}</div>}
+            </div>
 
-          <div className="mb-3">
-            <label className="form-label">Catégorie :</label>
-            <select name="categorie" className="form-select" value={formData.categorie} onChange={handleChange}>
-              <option value="moto">Moto</option>
-              <option value="piece">Pièce</option>
-            </select>
-          </div>
+            <div className="mb-3">
+              <label className="form-label">Quantité en stock :</label>
+              <input type="number" name="quantite_stock" className="form-control" value={formData.quantite_stock} onChange={handleChange} />
+              {errors.quantite_stock && <div className="text-danger">{errors.quantite_stock}</div>}
+            </div>
 
-          <div className="mb-3">
-            <label className="form-label">Changer la photo :</label>
-            <input type="file" name="photo" className="form-control" onChange={handleChange} />
-            {formData.anciennePhoto && (
-              <div className="mt-2">
-                <img
-                  src={`https://princekismotoshop.alwaysdata.net/photo/${formData.anciennePhoto}`}
-                  alt="Photo actuelle"
-                  style={{ width: "100px", height: "auto" }}
-                />
-              </div>
-            )}
-          </div>
+            <div className="mb-3">
+              <label className="form-label">Catégorie :</label>
+              <select name="categorie" className="form-select" value={formData.categorie} onChange={handleChange}>
+                <option value="moto">Moto</option>
+                <option value="piece">Pièce</option>
+              </select>
+            </div>
 
-          <button type="submit" className="btn btn-warning w-100 mb-2" disabled={loading}>
-            {loading ? "Modification..." : "Modifier"}
-          </button>
+            <div className="mb-3">
+              <label className="form-label">Changer la photo :</label>
+              <input type="file" name="photo" className="form-control" onChange={handleChange} />
+              {formData.anciennePhoto && (
+                <div className="mt-2">
+                  <img
+                    src={`https://princekismotoshop.alwaysdata.net/photo/${formData.anciennePhoto}`}
+                    alt="Photo actuelle"
+                    style={{ width: "100px", height: "auto" }}
+                  />
+                </div>
+              )}
+            </div>
 
-          <button
-            type="button"
-            className="btn btn-secondary w-100"
-            onClick={() => navigate("/admin/produits")}
-          >
-            Annuler / Retour
-          </button>
-        </form>
+            <button type="submit" className="btn btn-warning w-100 mb-2" disabled={loading}>
+              {loading ? "Modification..." : "Modifier"}
+            </button>
+
+            <button
+              type="button"
+              className="btn btn-secondary w-100"
+              onClick={() => navigate("/admin/produits")}
+            >
+              Annuler / Retour
+            </button>
+          </form>
+        </div>
       </div>
-    </>
+    </div>
   );
 };
 

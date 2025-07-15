@@ -93,99 +93,102 @@ const AjouterProduit = () => {
     };
 
     return (
-        <>
+        <div className="d-flex flex-column flex-md-row min-vh-100">
             <NavSlide />
-            <div className="container my-5" style={{ maxWidth: "500px" }}>
-                <h2 className="mb-4 text-center">Ajouter un produit</h2>
-                <form onSubmit={handleSubmit}>
-                    <div className="mb-3">
-                        <label htmlFor="nom" className="form-label">Nom :</label>
-                        <input
-                            type="text"
-                            id="nom"
-                            name="nom"
-                            className="form-control"
-                            value={formData.nom}
-                            onChange={handleChange}
-                            required
-                        />
-                        {errors.nom && <div className="text-danger">{errors.nom}</div>}
-                    </div>
 
-                    <div className="mb-3">
-                        <label htmlFor="description" className="form-label">Description :</label>
-                        <textarea
-                            id="description"
-                            name="description"
-                            className="form-control"
-                            rows="3"
-                            value={formData.description}
-                            onChange={handleChange}
-                        />
-                    </div>
+            <div className="container-fluid p-4" style={{ marginTop: "60px" }}>
+                <div className="mx-auto" style={{ maxWidth: "600px" }}>
+                    <h2 className="mb-4 text-center">Ajouter un produit</h2>
+                    <form onSubmit={handleSubmit}>
+                        <div className="mb-3">
+                            <label htmlFor="nom" className="form-label">Nom :</label>
+                            <input
+                                type="text"
+                                id="nom"
+                                name="nom"
+                                className="form-control"
+                                value={formData.nom}
+                                onChange={handleChange}
+                                required
+                            />
+                            {errors.nom && <div className="text-danger">{errors.nom}</div>}
+                        </div>
 
-                    <div className="mb-3">
-                        <label htmlFor="prix" className="form-label">Prix (Fc) :</label>
-                        <input
-                            type="number"
-                            step="0.01"
-                            id="prix"
-                            name="prix"
-                            className="form-control"
-                            value={formData.prix}
-                            onChange={handleChange}
-                            required
-                        />
-                        {errors.prix && <div className="text-danger">{errors.prix}</div>}
-                    </div>
+                        <div className="mb-3">
+                            <label htmlFor="description" className="form-label">Description :</label>
+                            <textarea
+                                id="description"
+                                name="description"
+                                className="form-control"
+                                rows="3"
+                                value={formData.description}
+                                onChange={handleChange}
+                            />
+                        </div>
 
-                    <div className="mb-3">
-                        <label htmlFor="quantite_stock" className="form-label">Quantité en stock :</label>
-                        <input
-                            type="number"
-                            id="quantite_stock"
-                            name="quantite_stock"
-                            className="form-control"
-                            value={formData.quantite_stock}
-                            onChange={handleChange}
-                            required
-                        />
-                        {errors.quantite_stock && <div className="text-danger">{errors.quantite_stock}</div>}
-                    </div>
+                        <div className="mb-3">
+                            <label htmlFor="prix" className="form-label">Prix (Fc) :</label>
+                            <input
+                                type="number"
+                                step="0.01"
+                                id="prix"
+                                name="prix"
+                                className="form-control"
+                                value={formData.prix}
+                                onChange={handleChange}
+                                required
+                            />
+                            {errors.prix && <div className="text-danger">{errors.prix}</div>}
+                        </div>
 
-                    <div className="mb-3">
-                        <label htmlFor="categorie" className="form-label">Catégorie :</label>
-                        <select
-                            id="categorie"
-                            name="categorie"
-                            className="form-select"
-                            value={formData.categorie}
-                            onChange={handleChange}
-                            required
-                        >
-                            <option value="moto">Moto</option>
-                            <option value="piece">Pièce</option>
-                        </select>
-                    </div>
+                        <div className="mb-3">
+                            <label htmlFor="quantite_stock" className="form-label">Quantité en stock :</label>
+                            <input
+                                type="number"
+                                id="quantite_stock"
+                                name="quantite_stock"
+                                className="form-control"
+                                value={formData.quantite_stock}
+                                onChange={handleChange}
+                                required
+                            />
+                            {errors.quantite_stock && <div className="text-danger">{errors.quantite_stock}</div>}
+                        </div>
 
-                    <div className="mb-4">
-                        <label htmlFor="photo" className="form-label">Photo :</label>
-                        <input
-                            type="file"
-                            id="photo"
-                            name="photo"
-                            className="form-control"
-                            accept="image/*"
-                            onChange={handleChange}
-                        />
-                    </div>
+                        <div className="mb-3">
+                            <label htmlFor="categorie" className="form-label">Catégorie :</label>
+                            <select
+                                id="categorie"
+                                name="categorie"
+                                className="form-select"
+                                value={formData.categorie}
+                                onChange={handleChange}
+                                required
+                            >
+                                <option value="moto">Moto</option>
+                                <option value="piece">Pièce</option>
+                            </select>
+                        </div>
 
-                    <button type="submit" className="btn btn-primary w-100" disabled={loading}>
-                        {loading ? "Ajout en cours..." : "Ajouter"}
-                    </button>
-                </form>
+                        <div className="mb-4">
+                            <label htmlFor="photo" className="form-label">Photo :</label>
+                            <input
+                                type="file"
+                                id="photo"
+                                name="photo"
+                                className="form-control"
+                                accept="image/*"
+                                onChange={handleChange}
+                            />
+                        </div>
+
+                        <button type="submit" className="btn btn-primary w-100" disabled={loading}>
+                            {loading ? "Ajout en cours..." : "Ajouter"}
+                        </button>
+                    </form>
+                </div>
             </div>
-        </>
+        </div>
     );
 };
 

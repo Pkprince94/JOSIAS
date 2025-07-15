@@ -10,8 +10,6 @@ const ProductCard = ({ product }) => {
 
   const handleCommanderClick = () => {
     const utilisateurStr = sessionStorage.getItem("utilisateur");
-
-    console.log("👤 Session utilisateur avant commande:", utilisateurStr);
     sessionStorage.setItem("produit_a_commander", JSON.stringify(product));
 
     if (!utilisateurStr) {
@@ -38,20 +36,14 @@ const ProductCard = ({ product }) => {
 
     try {
       const url = "https://princekismotoshop.alwaysdata.net/models/LikeDislike.php";
-      console.log("📤 Envoi du vote à :", url);
-      console.log("📝 Payload :", { produit_id: product.id, type });
-      //  la page
       const res = await fetch(url, {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ produit_id: product.id, type }),
       });
-     
-      console.log("📥 Status HTTP:", res.status);
-      const data = await res.json();
-      console.log("📥 Données reçues:", data);
 
+      const data = await res.json();
       if (data.success) {
         setLikes(data.stats.likes);
         setDislikes(data.stats.dislikes);
@@ -59,13 +51,13 @@ const ProductCard = ({ product }) => {
         alert(data.message || "Erreur lors du vote");
       }
     } catch (err) {
-      console.error(" Erreur réseau ou serveur:", err);
+      console.error("Erreur réseau :", err);
       alert("Erreur serveur");
     }
   };
 
   return (
-    <div className="card shadow-sm mb-4" style={{ width: "18rem" }}>
+    <div className="card shadow-sm mb-4 h-100" style={{ width: "100%", maxWidth: "300px" }}>
       <img
         src={
           product.photo?.startsWith("http")
@@ -76,30 +68,27 @@ const ProductCard = ({ product }) => {
         alt={product.nom}
         style={{ height: "200px", objectFit: "cover" }}
       />
-      <div className="card-body">
-        <div className="d-flex justify-content-between align-items-center mb-2">
-          <h5 className="card-title mb-0">{product.nom}</h5>
-        </div>
-        <p className="text-muted mb-1">
-          <strong>Catégorie :</strong> {product.categorie}
-        </p>
-        <p className="card-text" style={{ fontSize: "0.9rem" }}>
-          {product.description}
-        </p>
-        <p className="fw-bold text-primary">{parseFloat(product.prix).toFixed(0)} Fc</p>
-
-        <div className="d-flex justify-content-between align-items-center mb-2">
-          <button onClick={() => handleVote("like")} className="btn btn-sm btn-outline-primary">
-            <ThumbsUp size={16} /> {likes}
-          </button>
-          <button onClick={() => handleVote("dislike")} className="btn btn-sm btn-outline-danger">
-            <ThumbsDown size={16} /> {dislikes}
-          </button>
+      <div className="card-body d-flex flex-column justify-content-between">
+        <div>
+          <h5 className="card-title">{product.nom}</h5>
+          <p className="text-muted mb-1"><strong>Catégorie :</strong> {product.categorie}</p>
+          <p className="card-text" style={{ fontSize: "0.9rem" }}>{product.description}</p>
+          <p className="fw-bold text-primary">{parseFloat(product.prix).toFixed(0)} Fc</p>
         </div>
 
-        <button className="btn btn-outline-success btn-sm w-100" onClick={handleCommanderClick}>
-          Commander
-        </button>
+        <div className="mt-3">
+          <div className="d-flex justify-content-between align-items-center mb-2">
+            <button onClick={() => handleVote("like")} className="btn btn-sm btn-outline-primary">
+              <ThumbsUp size={16} /> {likes}
+            </button>
+            <button onClick={() => handleVote("dislike")} className="btn btn-sm btn-outline-danger">
+              <ThumbsDown size={16} /> {dislikes}
+            </button>
+          </div>
+          <button className="btn btn-outline-success btn-sm w-100" onClick={handleCommanderClick}>
+            Commander
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -111,15 +100,10 @@ const Afficher = () => {
 
   useEffect(() => {
     const url = "https://princekismotoshop.alwaysdata.net/models/Affichep.php";
-    console.log("🔄 Chargement des produits depuis :", url);
 
     fetch(url)
-      .then((res) => {
-        console.log("📡 Status HTTP Produits :", res.status);
-        return res.json();
-      })
+      .then((res) => res.json())
       .then((data) => {
-        console.log("📦 Produits reçus :", data);
         if (data.success) {
           setProducts(data.data);
         } else {
@@ -128,7 +112,7 @@ const Afficher = () => {
         setLoading(false);
       })
       .catch((err) => {
-        console.error("❌ Erreur lors du chargement des produits :", err);
+        console.error("Erreur lors du chargement des produits :", err);
         alert("Erreur de chargement.");
         setLoading(false);
       });
@@ -145,11 +129,11 @@ const Afficher = () => {
         ) : products.length === 0 ? (
           <p className="text-center">Aucun produit disponible.</p>
         ) : (
-          <div className="row">
+          <div className="row justify-content-center">
             {products.map((product) => (
               <div
                 key={product.id}
-                className="col-sm-12 col-md-6 col-lg-4 d-flex justify-content-center"
+                className="col-12 col-sm-6 col-md-4 col-xl-3 d-flex justify-content-center mb-4"
               >
                 <ProductCard product={product} />
               </div>

@@ -6,14 +6,12 @@ import { FaEdit, FaTrash } from 'react-icons/fa';
 export default function ListProduit() {
   const [produits, setProduits] = useState([]);
   const [loading, setLoading] = useState(true);
-
   const navigate = useNavigate();
 
-  // Vérification du rôle admin
   useEffect(() => {
     const role = sessionStorage.getItem("role");
     if (role !== "admin") {
-      // navigate("/"); // tu peux rediriger si besoin
+      // navigate("/"); // active si besoin
     }
   }, [navigate]);
 
@@ -65,65 +63,68 @@ export default function ListProduit() {
     <>
       <NavSlide />
 
-      <div className="container mt-4">
-        <h2 className="mb-4">Liste des produits</h2>
-        {produits.length === 0 ? (
-          <p>Aucun produit trouvé.</p>
-        ) : (
-          <div className="table-responsive">
-            <table className="table table-bordered align-middle">
-              <thead className="table-dark">
-                <tr>
-                  <th>Nom</th>
-                  <th>Description</th>
-                  <th>Prix (Fc)</th>
-                  <th>Catégorie</th>
-                  <th>Quantité</th>
-                  <th>Photo</th>
-                  <th className="text-center">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {produits.map(({ id, nom, description, prix, categorie, photo, quantite_stock }) => (
-                  <tr key={id}>
-                    <td>{nom}</td>
-                    <td>{description}</td>
-                    <td>{Number(prix).toFixed(0)}</td>
-                    <td>{categorie}</td>
-                    <td>{quantite_stock}</td>
-                    <td>
-                      {photo ? (
-                        <img
-                          src={`https://princekismotoshop.alwaysdata.net/photo/${photo}`}
-                          alt={nom}
-                          style={{ width: '60px', height: 'auto' }}
-                        />
-                      ) : (
-                        'Aucune'
-                      )}
-                    </td>
-                    <td className="text-center">
-                      <button
-                        className="btn btn-outline-primary btn-sm me-2"
-                        title="Modifier"
-                        onClick={() => navigate(`/modifier/${id}`)}
-                      >
-                        <FaEdit />
-                      </button>
-                      <button
-                        className="btn btn-outline-danger btn-sm"
-                        title="Supprimer"
-                        onClick={() => handleDelete(id)}
-                      >
-                        <FaTrash />
-                      </button>
-                    </td>
+      <div className="container-fluid" style={{ marginLeft: '250px', paddingTop: '20px' }}>
+        <div className="px-3">
+          <h2 className="mb-4 text-center text-md-start">Liste des produits</h2>
+          {produits.length === 0 ? (
+            <p>Aucun produit trouvé.</p>
+          ) : (
+            <div className="table-responsive">
+              <table className="table table-bordered table-hover align-middle text-center">
+                <thead className="table-dark">
+                  <tr>
+                    <th>Nom</th>
+                    <th>Description</th>
+                    <th>Prix (Fc)</th>
+                    <th>Catégorie</th>
+                    <th>Quantité</th>
+                    <th>Photo</th>
+                    <th>Actions</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
+                </thead>
+                <tbody>
+                  {produits.map(({ id, nom, description, prix, categorie, photo, quantite_stock }) => (
+                    <tr key={id}>
+                      <td>{nom}</td>
+                      <td className="text-truncate" style={{ maxWidth: '200px' }}>{description}</td>
+                      <td>{Number(prix).toFixed(0)}</td>
+                      <td>{categorie}</td>
+                      <td>{quantite_stock}</td>
+                      <td>
+                        {photo ? (
+                          <img
+                            src={`https://princekismotoshop.alwaysdata.net/photo/${photo}`}
+                            alt={nom}
+                            style={{ width: '60px', height: 'auto' }}
+                            className="img-fluid"
+                          />
+                        ) : (
+                          'Aucune'
+                        )}
+                      </td>
+                      <td>
+                        <button
+                          className="btn btn-outline-primary btn-sm me-2"
+                          title="Modifier"
+                          onClick={() => navigate(`/modifier/${id}`)}
+                        >
+                          <FaEdit />
+                        </button>
+                        <button
+                          className="btn btn-outline-danger btn-sm"
+                          title="Supprimer"
+                          onClick={() => handleDelete(id)}
+                        >
+                          <FaTrash />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
       </div>
     </>
   );
