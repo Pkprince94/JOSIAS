@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import NavSlide from './NavSlide';
 import { useNavigate } from "react-router-dom";
 import { FaEdit, FaTrash } from 'react-icons/fa';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function ListProduit() {
   const [produits, setProduits] = useState([]);
@@ -11,7 +12,7 @@ export default function ListProduit() {
   useEffect(() => {
     const role = sessionStorage.getItem("role");
     if (role !== "admin") {
-      // navigate("/"); // active si besoin
+      // navigate("/");
     }
   }, [navigate]);
 
@@ -62,69 +63,65 @@ export default function ListProduit() {
   return (
     <>
       <NavSlide />
+      <div className="container-fluid py-4">
+        <h2 className="mb-4 text-center">Liste des produits</h2>
 
-      <div className="container-fluid" style={{ marginLeft: '250px', paddingTop: '20px' }}>
-        <div className="px-3">
-          <h2 className="mb-4 text-center text-md-start">Liste des produits</h2>
-          {produits.length === 0 ? (
-            <p>Aucun produit trouvé.</p>
-          ) : (
-            <div className="table-responsive">
-              <table className="table table-bordered table-hover align-middle text-center">
-                <thead className="table-dark">
-                  <tr>
-                    <th>Nom</th>
-                    <th>Description</th>
-                    <th>Prix (Fc)</th>
-                    <th>Catégorie</th>
-                    <th>Quantité</th>
-                    <th>Photo</th>
-                    <th>Actions</th>
+        {produits.length === 0 ? (
+          <p className="text-center">Aucun produit trouvé.</p>
+        ) : (
+          <div className="table-responsive">
+            <table className="table table-bordered table-hover text-nowrap align-middle text-center">
+              <thead className="table-dark">
+                <tr>
+                  <th>Nom</th>
+                  <th>Description</th>
+                  <th>Prix (Fc)</th>
+                  <th>Catégorie</th>
+                  <th>Quantité</th>
+                  <th>Photo</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {produits.map(({ id, nom, description, prix, categorie, photo, quantite_stock }) => (
+                  <tr key={id}>
+                    <td>{nom}</td>
+                    <td className="text-truncate" style={{ maxWidth: '250px' }}>{description}</td>
+                    <td>{Number(prix).toFixed(0)}</td>
+                    <td>{categorie}</td>
+                    <td>{quantite_stock}</td>
+                    <td>
+                      {photo ? (
+                        <img
+                          src={`https://princekismotoshop.alwaysdata.net/photo/${photo}`}
+                          alt={nom}
+                          className="img-fluid"
+                          style={{ width: '60px', height: 'auto' }}
+                        />
+                      ) : 'Aucune'}
+                    </td>
+                    <td>
+                      <button
+                        className="btn btn-outline-primary btn-sm me-2"
+                        title="Modifier"
+                        onClick={() => navigate(`/modifier/${id}`)}
+                      >
+                        <FaEdit />
+                      </button>
+                      <button
+                        className="btn btn-outline-danger btn-sm"
+                        title="Supprimer"
+                        onClick={() => handleDelete(id)}
+                      >
+                        <FaTrash />
+                      </button>
+                    </td>
                   </tr>
-                </thead>
-                <tbody>
-                  {produits.map(({ id, nom, description, prix, categorie, photo, quantite_stock }) => (
-                    <tr key={id}>
-                      <td>{nom}</td>
-                      <td className="text-truncate" style={{ maxWidth: '200px' }}>{description}</td>
-                      <td>{Number(prix).toFixed(0)}</td>
-                      <td>{categorie}</td>
-                      <td>{quantite_stock}</td>
-                      <td>
-                        {photo ? (
-                          <img
-                            src={`https://princekismotoshop.alwaysdata.net/photo/${photo}`}
-                            alt={nom}
-                            style={{ width: '60px', height: 'auto' }}
-                            className="img-fluid"
-                          />
-                        ) : (
-                          'Aucune'
-                        )}
-                      </td>
-                      <td>
-                        <button
-                          className="btn btn-outline-primary btn-sm me-2"
-                          title="Modifier"
-                          onClick={() => navigate(`/modifier/${id}`)}
-                        >
-                          <FaEdit />
-                        </button>
-                        <button
-                          className="btn btn-outline-danger btn-sm"
-                          title="Supprimer"
-                          onClick={() => handleDelete(id)}
-                        >
-                          <FaTrash />
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
-        </div>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
     </>
   );

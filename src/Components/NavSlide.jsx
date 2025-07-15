@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function NavSlide() {
   const [darkMode, setDarkMode] = useState(false);
@@ -20,82 +21,79 @@ export default function NavSlide() {
   };
 
   return (
-    <div className="d-flex flex-column flex-md-row min-vh-100">
-      {/* Bouton Menu Mobile */}
-      <div className="d-md-none p-2 bg-light border-bottom">
-        <button
-          className="btn btn-outline-secondary"
-          onClick={() => setShowSidebar(!showSidebar)}
-        >
+    <div className="d-flex">
+      {/* Sidebar */}
+      <div
+        className={`bg-light border-end ${showSidebar ? "d-block" : "d-none"} d-md-block`}
+        style={{ width: "250px", minHeight: "100vh", position: "fixed", top: 0, left: 0, zIndex: 1000 }}
+      >
+        <div className="p-3">
+          <h4 className="text-primary fw-bold mb-4 text-center">Page Admin Prince</h4>
+          <ul className="nav flex-column">
+            <li className="nav-item mb-2">
+              <a href="/AdminAccueil" className="nav-link text-dark">
+                🏠 Accueil
+              </a>
+            </li>
+            <li className="nav-item mb-2">
+              <a href="/AjouterProduit" className="nav-link text-dark">
+                ➕ Ajouter un produit
+              </a>
+            </li>
+            <li className="nav-item mb-2">
+              <a href="/ListProduit" className="nav-link text-dark">
+                🛠️ Modifier / Supprimer
+              </a>
+            </li>
+            <li className="nav-item mb-2">
+              <a href="/HistoriqueAdmin" className="nav-link text-dark">
+                📜 Historique commandes
+              </a>
+            </li>
+            <li className="nav-item mt-3">
+              <button
+                onClick={handleLogout}
+                className="btn btn-outline-danger w-100"
+              >
+                🔓 Se déconnecter
+              </button>
+            </li>
+          </ul>
+
+          <hr />
+          <div className="form-check form-switch d-flex align-items-center">
+            <input
+              className="form-check-input me-2"
+              type="checkbox"
+              id="darkModeSwitch"
+              checked={darkMode}
+              onChange={() => setDarkMode(!darkMode)}
+            />
+            <label className="form-check-label" htmlFor="darkModeSwitch">
+              {darkMode ? "🌙 Sombre" : "☀️ Clair"}
+            </label>
+          </div>
+        </div>
+      </div>
+
+      {/* Topbar Mobile */}
+      <div className="d-md-none bg-light w-100 p-2 border-bottom" style={{ position: "fixed", top: 0, zIndex: 1040 }}>
+        <button className="btn btn-outline-secondary" onClick={() => setShowSidebar(!showSidebar)}>
           ☰ Menu
         </button>
       </div>
 
-      {/* Sidebar */}
+      {/* Main content */}
       <div
-        className={`${
-          showSidebar ? "d-flex" : "d-none"
-        } d-md-flex flex-column p-3 ${darkMode ? "bg-dark text-light" : "bg-light"}`}
-        style={{ width: "100%", maxWidth: "250px", minHeight: "100vh" }}
+        className="flex-grow-1"
+        style={{
+          marginLeft: window.innerWidth >= 768 ? "250px" : "0",
+          padding: "20px",
+          paddingTop: window.innerWidth < 768 ? "60px" : "20px",
+        }}
       >
-        <a href="/" className="d-flex align-items-center mb-3 text-decoration-none">
-          <span className="fs-4 fw-bold">Page Admin Prince</span>
-        </a>
-        <hr />
-        <ul className="nav nav-pills flex-column mb-auto">
-          <li className="nav-item">
-            <a href="/AdminAccueil" className="nav-link active">
-              <i className="bi bi-house-door me-2"></i> Accueil
-            </a>
-          </li>
-          <li>
-            <a href="/AjouterProduit" className="nav-link">
-              <i className="bi bi-box-seam me-2"></i> Ajouter un produit
-            </a>
-          </li>
-          <li>
-            <a href="/ListProduit" className="nav-link">
-              <i className="bi bi-pencil-square me-2"></i> Modifier / Supprimer
-            </a>
-          </li>
-          <li>
-            <a href="/Modifier" className="nav-link">
-              <i className="bi bi-gear me-2"></i> Modifier produit
-            </a>
-          </li>
-          <li>
-            <a href="/HistoriqueAdmin" className="nav-link">
-              <i className="bi bi-clock-history me-2"></i> Historique commandes
-            </a>
-          </li>
-          <li>
-            <button
-              onClick={handleLogout}
-              className="nav-link btn btn-link text-start text-danger mt-2"
-            >
-              <i className="bi bi-box-arrow-right me-2"></i> Se déconnecter
-            </button>
-          </li>
-        </ul>
-        <hr />
-        <div className="form-check form-switch">
-          <input
-            className="form-check-input"
-            type="checkbox"
-            id="darkModeSwitch"
-            checked={darkMode}
-            onChange={() => setDarkMode(!darkMode)}
-          />
-          <label className="form-check-label" htmlFor="darkModeSwitch">
-            {darkMode ? "Mode Sombre" : "Mode Clair"}
-          </label>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="flex-grow-1 p-4">
-        <h3>Bienvenue Admin Prince Kisunzu Josias</h3>
-        <p>Voici le contenu de la table des produits et commandes.</p>
+        <h3 className="text-center text-md-start mb-3">Bienvenue Admin Prince Kisunzu Josias</h3>
+        <p className="text-center text-md-start">Voici le contenu de la table des produits et commandes.</p>
       </div>
     </div>
   );
