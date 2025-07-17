@@ -92,7 +92,7 @@ const Modifier = () => {
   try {
   const res = await fetch("https://princekismotoshop.alwaysdata.net/models/Modifier.php", {
     method: "POST",
-    body: data,
+    body: formData,
     credentials: "include", // 👈 ajoute ceci pour envoyer les cookies de session
     });
 
