@@ -89,12 +89,15 @@ const Modifier = () => {
       data.append("photo", formData.photo);
     }
 
-    try {
-      const res = await fetch("https://princekismotoshop.alwaysdata.net/models/Modifier.php", {
-        method: "POST",
-        body: data,
-      });
-      const result = await res.json();
+  try {
+  const res = await fetch("https://princekismotoshop.alwaysdata.net/models/Modifier.php", {
+    method: "POST",
+    body: data,
+    credentials: "include", // 👈 ajoute ceci pour envoyer les cookies de session
+    });
+
+  const result = await res.json();
+
 
       if (result.success) {
         alert("Produit modifié avec succès !");
