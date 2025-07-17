@@ -56,16 +56,14 @@ const ProductCard = ({ product }) => {
     }
   };
 
-  // Correction ici pour le chemin photo
-  const photoName = product.photo ? product.photo.replace(/^photo\//, "") : null;
-  const photoURL = photoName
-    ? `https://princekismotoshop.alwaysdata.net/photo/${photoName}`
-    : "/images/default-product.png"; // mettre un chemin valide vers une image par défaut locale
-
   return (
     <div className="card shadow-sm mb-4 h-100" style={{ width: "100%", maxWidth: "300px" }}>
       <img
-        src={photoURL}
+        src={
+          product.photo?.startsWith("http")
+            ? product.photo
+            : `https://princekismotoshop.alwaysdata.net/photo/${product.photo}`
+        }
         className="card-img-top"
         alt={product.nom}
         style={{ height: "200px", objectFit: "cover" }}
@@ -73,12 +71,8 @@ const ProductCard = ({ product }) => {
       <div className="card-body d-flex flex-column justify-content-between">
         <div>
           <h5 className="card-title">{product.nom}</h5>
-          <p className="text-muted mb-1">
-            <strong>Catégorie :</strong> {product.categorie}
-          </p>
-          <p className="card-text" style={{ fontSize: "0.9rem" }}>
-            {product.description}
-          </p>
+          <p className="text-muted mb-1"><strong>Catégorie :</strong> {product.categorie}</p>
+          <p className="card-text" style={{ fontSize: "0.9rem" }}>{product.description}</p>
           <p className="fw-bold text-primary">{parseFloat(product.prix).toFixed(0)} Fc</p>
         </div>
 
@@ -87,10 +81,7 @@ const ProductCard = ({ product }) => {
             <button onClick={() => handleVote("like")} className="btn btn-sm btn-outline-primary">
               <ThumbsUp size={16} /> {likes}
             </button>
-            <button
-              onClick={() => handleVote("dislike")}
-              className="btn btn-sm btn-outline-danger"
-            >
+            <button onClick={() => handleVote("dislike")} className="btn btn-sm btn-outline-danger">
               <ThumbsDown size={16} /> {dislikes}
             </button>
           </div>
