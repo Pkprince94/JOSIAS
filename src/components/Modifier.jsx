@@ -173,7 +173,7 @@ const Modifier = () => {
             <button
               type="button"
               className="btn btn-secondary w-100"
-              onClick={() => navigate("/admin/produits")}
+              onClick={() => navigate("/")}
             >
               Annuler / Retour
             </button>

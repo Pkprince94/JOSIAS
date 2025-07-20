@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'; 
 import NavSlide from './NavSlide';
 import { useNavigate } from "react-router-dom";
 import { FaEdit, FaTrash } from 'react-icons/fa';
@@ -18,7 +18,9 @@ export default function ListProduit() {
 
   const fetchProduits = async () => {
     try {
-      const res = await fetch('https://princekismotoshop.alwaysdata.net/models/Affichep.php');
+      const res = await fetch('https://princekismotoshop.alwaysdata.net/models/Affichep.php', {
+        credentials: 'include',  // IMPORTANT pour session PHP
+      });
       const json = await res.json();
       if (json.success) {
         setProduits(json.data);
@@ -43,6 +45,7 @@ export default function ListProduit() {
       const res = await fetch('https://princekismotoshop.alwaysdata.net/models/Supprimer.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',  // IMPORTANT pour session PHP
         body: JSON.stringify({ id }),
       });
       const json = await res.json();
