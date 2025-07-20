@@ -97,7 +97,7 @@ function Connexion() {
             sessionStorage.removeItem("produit_a_commander");
             navigate("/commande", { state: { produit } });
           } else if (data.role === "admin") {
-            // navigate("/ajouterproduit");
+            navigate("/ajouterproduit");
           } else {
             navigate("/afficher");
           }
