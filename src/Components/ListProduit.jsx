@@ -53,7 +53,7 @@ export default function ListProduit() {
         alert('Produit supprimé');
         fetchProduits();
       } else {
-        alert('Erreur suppression');
+        alert('Erreur suppression : ' + (json.message || 'Erreur inconnue'));
       }
     } catch (err) {
       console.error(err);
