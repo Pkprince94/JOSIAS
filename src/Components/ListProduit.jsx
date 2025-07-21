@@ -46,7 +46,7 @@ export default function ListProduit() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',  // IMPORTANT pour session PHP
-        body: JSON.stringify({ id }),
+        body: JSON.stringify({ id: produitId }), // produitId doit être un nombre
       });
       const json = await res.json();
       if (json.success) {
