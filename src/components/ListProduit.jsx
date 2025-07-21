@@ -39,14 +39,14 @@ export default function ListProduit() {
     fetchProduits();
   }, []);
 
-  const handleDelete = async (produitId) => {
+  const handleDelete = async (id) => {
     if (!window.confirm('Supprimer ce produit ?')) return;
     try {
       const res = await fetch('https://princekismotoshop.alwaysdata.net/models/Supprimer.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',  // IMPORTANT pour session PHP
-        body: JSON.stringify({ id: produitId }), // produitId doit être un nombre
+        body: JSON.stringify({ id }),
       });
       const json = await res.json();
       if (json.success) {
