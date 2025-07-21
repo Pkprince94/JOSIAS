@@ -77,27 +77,26 @@ const Modifier = () => {
     if (!validateForm()) return;
 
     setLoading(true);
-    const data = new FormData();
-    data.append("id", id);
-    data.append("nom", formData.nom);
-    data.append("description", formData.description);
-    data.append("prix", formData.prix);
-    data.append("categorie", formData.categorie);
-    data.append("quantite_stock", formData.quantite_stock);
-    data.append("anciennePhoto", formData.anciennePhoto);
+    const formDataToSend = new FormData();
+    formDataToSend.append("id", id); // ✅ ID bien envoyé
+    formDataToSend.append("nom", formData.nom);
+    formDataToSend.append("description", formData.description);
+    formDataToSend.append("prix", formData.prix);
+    formDataToSend.append("categorie", formData.categorie);
+    formDataToSend.append("quantite_stock", formData.quantite_stock);
+    formDataToSend.append("anciennePhoto", formData.anciennePhoto);
     if (formData.photo) {
-      data.append("photo", formData.photo);
+      formDataToSend.append("photo", formData.photo);
     }
 
-  try {
-  const res = await fetch("https://princekismotoshop.alwaysdata.net/models/Modifier.php", {
-    method: "POST",
-    body: formData,
-    credentials: "include", // 👈 ajoute ceci pour envoyer les cookies de session
-    });
+    try {
+      const res = await fetch("https://princekismotoshop.alwaysdata.net/models/Modifier.php", {
+        method: "POST",
+        body: formDataToSend,
+        credentials: "include",
+      });
 
-  const result = await res.json();
-
+      const result = await res.json();
 
       if (result.success) {
         alert("Produit modifié avec succès !");
@@ -116,7 +115,6 @@ const Modifier = () => {
   return (
     <div className="d-flex flex-column flex-md-row min-vh-100">
       <NavSlide />
-
       <div className="container-fluid p-4">
         <div className="mx-auto" style={{ maxWidth: "600px" }}>
           <h2 className="mb-4 text-center">Modifier un produit</h2>
