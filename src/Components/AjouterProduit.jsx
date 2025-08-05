@@ -127,7 +127,7 @@ const AjouterProduit = () => {
                         </div>
 
                         <div className="mb-3">
-                            <label htmlFor="prix" className="form-label">Prix (Fc) :</label>
+                            <label htmlFor="prix" className="form-label">Prix ($) :</label>
                             <input
                                 type="number"
                                 step="0.01"
