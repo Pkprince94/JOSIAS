@@ -78,7 +78,7 @@ const Modifier = () => {
 
     setLoading(true);
     const formDataToSend = new FormData();
-    formDataToSend.append("id", id); // ✅ ID bien envoyé
+    formDataToSend.append("id", id); //  ID bien envoyé
     formDataToSend.append("nom", formData.nom);
     formDataToSend.append("description", formData.description);
     formDataToSend.append("prix", formData.prix);
@@ -131,7 +131,7 @@ const Modifier = () => {
             </div>
 
             <div className="mb-3">
-              <label className="form-label">Prix (Fc) :</label>
+              <label className="form-label">Prix ($) :</label>
               <input type="number" name="prix" className="form-control" value={formData.prix} onChange={handleChange} />
               {errors.prix && <div className="text-danger">{errors.prix}</div>}
             </div>
