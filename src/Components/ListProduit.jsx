@@ -78,7 +78,7 @@ export default function ListProduit() {
                 <tr>
                   <th>Nom</th>
                   <th>Description</th>
-                  <th>Prix (Fc)</th>
+                  <th>Prix ($)</th>
                   <th>Catégorie</th>
                   <th>Quantité</th>
                   <th>Photo</th>

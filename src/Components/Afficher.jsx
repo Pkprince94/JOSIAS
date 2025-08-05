@@ -73,7 +73,7 @@ const ProductCard = ({ product }) => {
           <h5 className="card-title">{product.nom}</h5>
           <p className="text-muted mb-1"><strong>Catégorie :</strong> {product.categorie}</p>
           <p className="card-text" style={{ fontSize: "0.9rem" }}>{product.description}</p>
-          <p className="fw-bold text-primary">{parseFloat(product.prix).toFixed(0)} Fc</p>
+          <p className="fw-bold text-primary">{parseFloat(product.prix).toFixed(0)} $</p>
         </div>
 
         <div className="mt-3">
