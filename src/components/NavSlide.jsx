@@ -31,7 +31,7 @@ export default function NavSlide() {
           <h4 className="text-primary fw-bold mb-4 text-center">Page Admin Prince</h4>
           <ul className="nav flex-column">
             <li className="nav-item mb-2">
-              <a href="/AdminAccueil" className="nav-link text-dark">
+              <a href="/Afficher" className="nav-link text-dark">
                 🏠 Accueil
               </a>
             </li>
