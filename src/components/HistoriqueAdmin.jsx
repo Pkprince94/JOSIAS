@@ -41,15 +41,10 @@ const HistoriqueAdmin = () => {
         "Content-Type": "application/json"
       }
     })
-      .then(res => {
-        if (!res.ok) {
-          throw new Error("Erreur " + res.status);
-        }
-        return res.json();
-      })
+      .then(res => res.json())
       .then(data => {
         if (data.success) {
-          setCommandes(data.commandes || []);
+          setCommandes(data.commandes);
         } else {
           setErreur(data.message || "Erreur inconnue.");
         }
@@ -67,10 +62,7 @@ const HistoriqueAdmin = () => {
         <h4 className="text-center mb-4">Historique complet des commandes (admin)</h4>
 
         {loading ? (
-          <div className="text-center">
-            <div className="spinner-border text-primary" role="status" />
-            <p>Chargement en cours...</p>
-          </div>
+          <p className="text-center">Chargement en cours...</p>
         ) : erreur ? (
           <div className="alert alert-danger text-center">{erreur}</div>
         ) : commandes.length === 0 ? (
@@ -91,14 +83,14 @@ const HistoriqueAdmin = () => {
               </thead>
               <tbody>
                 {commandes.map((cmd, index) => (
-                  <tr key={cmd.id || index}>
+                  <tr key={cmd.id}>
                     <td>{index + 1}</td>
-                    <td>{cmd.nom_utilisateur || "N/A"}</td>
-                    <td>{cmd.email || "N/A"}</td>
-                    <td>{cmd.nom_produit || "N/A"}</td>
-                    <td>{cmd.quantite ?? "N/A"}</td>
-                    <td>{cmd.adresse || "N/A"}</td>
-                    <td>{cmd.date_commande ? new Date(cmd.date_commande).toLocaleString() : "N/A"}</td>
+                    <td>{cmd.nom_utilisateur}</td>
+                    <td>{cmd.email}</td>
+                    <td>{cmd.nom_produit}</td>
+                    <td>{cmd.quantite}</td>
+                    <td>{cmd.adresse}</td>
+                    <td>{new Date(cmd.date_commande).toLocaleString()}</td>
                   </tr>
                 ))}
               </tbody>
