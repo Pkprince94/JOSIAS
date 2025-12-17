@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { ThumbsDown, ThumbsUp } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
+import { addToCart } from "../utils/cart";
 
 const ProductCard = ({ product }) => {
   const navigate = useNavigate();
@@ -10,21 +11,23 @@ const ProductCard = ({ product }) => {
 
   const handleCommanderClick = () => {
     const utilisateurStr = sessionStorage.getItem("utilisateur");
-    sessionStorage.setItem("produit_a_commander", JSON.stringify(product));
 
     if (!utilisateurStr) {
-      alert("Veuillez vous connecter pour passer une commande.");
+      alert("Veuillez vous connecter pour ajouter au panier.");
       navigate("/connexion");
       return;
     }
 
     const utilisateur = JSON.parse(utilisateurStr);
 
-    if (utilisateur.role === "utilisateur") {
-      navigate("/commande", { state: { produit: product } });
-    } else {
-      alert("Seuls les utilisateurs peuvent commander.");
+    if (utilisateur.role !== "utilisateur") {
+      alert("Seuls les utilisateurs peuvent ajouter au panier.");
+      return;
     }
+
+    addToCart(product, 1);
+    alert(`${product.nom} ajouté au panier.`);
+    // Optionally navigate to panier: navigate('/panier');
   };
 
   const handleVote = async (type) => {

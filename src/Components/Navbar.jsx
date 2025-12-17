@@ -1,13 +1,22 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import '../style.css';
+import { getTotalCount } from '../utils/cart';
 
 const Navbar = () => {
+  const [count, setCount] = useState(getTotalCount());
+
+  useEffect(() => {
+    const onStorage = () => setCount(getTotalCount());
+    window.addEventListener('storage', onStorage);
+    // also update on mount
+    setCount(getTotalCount());
+    return () => window.removeEventListener('storage', onStorage);
+  }, []);
+
   return (
     <nav className="navbar navbar-expand-lg custom-navbar">
       <div className="container-fluid">
-        {/* <NavLink className="navbar-brand" to="/">MonSite</NavLink> */}
-
         <button
           className="navbar-toggler"
           type="button"
@@ -21,7 +30,7 @@ const Navbar = () => {
         </button>
 
         <div className="collapse navbar-collapse" id="navbarContent">
-          <div className="ms-auto d-flex gap-3">
+          <div className="ms-auto d-flex gap-3 align-items-center">
             <NavLink
               to="/"
               className={({ isActive }) =>
@@ -38,6 +47,15 @@ const Navbar = () => {
               }
             >
               Se connecter
+            </NavLink>
+
+            <NavLink
+              to="/panier"
+              className={({ isActive }) =>
+                isActive ? 'nav-link text-white fw-bold' : 'nav-link text-white'
+              }
+            >
+              Panier ({count})
             </NavLink>
           </div>
         </div>
