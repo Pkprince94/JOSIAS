@@ -6,6 +6,7 @@ import { getCart, clearCart } from '../utils/cart';
 const Checkout = () => {
   const [cart, setCart] = useState(getCart());
   const [adresse, setAdresse] = useState('');
+  const [telephone, setTelephone] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -36,6 +37,11 @@ const Checkout = () => {
 
     setLoading(true);
 
+    if (!telephone || telephone.trim().length < 6) {
+      alert('Veuillez fournir un numéro de téléphone valide.');
+      return;
+    }
+
     try {
       for (const item of cart) {
         const commande = {
@@ -43,6 +49,7 @@ const Checkout = () => {
           produit_id: item.id,
           nom_client: utilisateur.nom,
           adresse,
+          telephone,
           quantite: Number(item.quantite),
         };
 
@@ -89,6 +96,18 @@ const Checkout = () => {
               <div className="mb-3">
                 <label className="form-label">Adresse de livraison</label>
                 <textarea className="form-control" value={adresse} onChange={(e) => setAdresse(e.target.value)} required />
+              </div>
+
+              <div className="mb-3">
+                <label className="form-label">Numéro de téléphone</label>
+                <input
+                  type="tel"
+                  className="form-control"
+                  value={telephone}
+                  onChange={(e) => setTelephone(e.target.value)}
+                  placeholder="Ex: +243xxxxxxxxx"
+                  required
+                />
               </div>
 
               <div className="mb-3">
