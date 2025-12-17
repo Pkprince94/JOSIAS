@@ -12,6 +12,8 @@ import Commande from './components/Commande';
 import PrivateRouteUtilisateur from './components/PrivateRouteUtilisateur';
 import Connexion from './components/Connexion';
 import HistoriqueAdmin from './components/HistoriqueAdmin';
+import Panier from './components/Panier';
+import Checkout from './components/Checkout';
 
 const App = () => {
   return (
@@ -33,6 +35,17 @@ const App = () => {
           element={
             <PrivateRouteUtilisateur>
               <Commande />
+            </PrivateRouteUtilisateur>
+          }
+        />
+
+        <Route path="/panier" element={<Panier />} />
+
+        <Route
+          path="/checkout"
+          element={
+            <PrivateRouteUtilisateur>
+              <Checkout />
             </PrivateRouteUtilisateur>
           }
         />
