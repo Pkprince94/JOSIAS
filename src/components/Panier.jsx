@@ -19,9 +19,11 @@ const Panier = () => {
   };
 
   const handleQtyChange = (id, q) => {
-    const qty = Number(q) || 1;
-    updateQuantity(id, qty);
-    setCart(getCart());
+    const qty = parseInt(q, 10);
+    if (!isNaN(qty) && qty >= 1) {
+      updateQuantity(id, qty);
+      setCart(getCart());
+    }
   };
 
   const handleCheckout = () => {

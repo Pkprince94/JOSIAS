@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import '../style.css';
 import { getTotalCount } from '../utils/cart';
+import { ShoppingCart } from 'lucide-react';
 
 const Navbar = () => {
   const [count, setCount] = useState(getTotalCount());
@@ -52,9 +53,10 @@ const Navbar = () => {
             <NavLink
               to="/panier"
               className={({ isActive }) =>
-                isActive ? 'nav-link text-white fw-bold' : 'nav-link text-white'
+                isActive ? 'nav-link text-white fw-bold d-flex align-items-center gap-2' : 'nav-link text-white d-flex align-items-center gap-2'
               }
             >
+              <ShoppingCart size={20} />
               Panier ({count})
             </NavLink>
           </div>
