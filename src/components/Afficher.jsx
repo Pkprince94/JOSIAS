@@ -60,17 +60,19 @@ const ProductCard = ({ product }) => {
   };
 
   return (
-    <div className="card shadow-sm mb-4 h-100" style={{ width: "100%", maxWidth: "300px" }}>
-      <img
-        src={
-          product.photo?.startsWith("http")
-            ? product.photo
-            : `https://princekismotoshop.alwaysdata.net/photo/${product.photo}`
-        }
-        className="card-img-top"
-        alt={product.nom}
-        style={{ height: "200px", objectFit: "cover" }}
-      />
+    <div className="card shadow-sm mb-4 h-100 w-100">
+      <div style={{ overflow: 'hidden', height: 0, paddingTop: '56.25%' }} className="position-relative">
+        <img
+          src={
+            product.photo?.startsWith("http")
+              ? product.photo
+              : `https://princekismotoshop.alwaysdata.net/photo/${product.photo}`
+          }
+          className="card-img-top position-absolute top-0 start-0 w-100 h-100"
+          alt={product.nom}
+          style={{ objectFit: "cover" }}
+        />
+      </div>
       <div className="card-body d-flex flex-column justify-content-between">
         <div>
           <h5 className="card-title">{product.nom}</h5>
@@ -79,7 +81,7 @@ const ProductCard = ({ product }) => {
           <p className="fw-bold text-primary">{parseFloat(product.prix).toFixed(0)} $</p>
         </div>
 
-        <div className="mt-3">
+          <div className="mt-3">
           <div className="d-flex justify-content-between align-items-center mb-2">
             <button onClick={() => handleVote("like")} className="btn btn-sm btn-outline-primary">
               <ThumbsUp size={16} /> {likes}

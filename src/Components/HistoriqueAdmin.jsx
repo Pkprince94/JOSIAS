@@ -74,23 +74,25 @@ const HistoriqueAdmin = () => {
                 <tr>
                   <th>#</th>
                   <th>Utilisateur</th>
-                  <th>Email</th>
+                  <th className="d-none d-md-table-cell">Email</th>
                   <th>Produit</th>
                   <th>Qté</th>
-                  <th>Adresse</th>
-                  <th>Date</th>
+                  <th className="d-none d-lg-table-cell">Adresse</th>
+                  <th className="d-none d-sm-table-cell">Téléphone</th>
+                  <th className="d-none d-xl-table-cell">Date</th>
                 </tr>
               </thead>
               <tbody>
                 {commandes.map((cmd, index) => (
                   <tr key={cmd.id}>
                     <td>{index + 1}</td>
-                    <td>{cmd.nom_utilisateur}</td>
-                    <td>{cmd.email}</td>
-                    <td>{cmd.nom_produit}</td>
+                    <td className="small">{cmd.nom_utilisateur}</td>
+                    <td className="d-none d-md-table-cell small">{cmd.email}</td>
+                    <td className="small">{cmd.nom_produit}</td>
                     <td>{cmd.quantite}</td>
-                    <td>{cmd.adresse}</td>
-                    <td>{new Date(cmd.date_commande).toLocaleString()}</td>
+                    <td className="d-none d-lg-table-cell small">{cmd.adresse}</td>
+                    <td className="d-none d-sm-table-cell small">{cmd.telephone || '—'}</td>
+                    <td className="d-none d-xl-table-cell small">{new Date(cmd.date_commande).toLocaleString()}</td>
                   </tr>
                 ))}
               </tbody>

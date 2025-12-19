@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
-import { getCart, clearCart } from '../utils/cart';
+import { getCart, clearCart, getTotalPrice } from '../utils/cart';
 
 const Checkout = () => {
   const [cart, setCart] = useState(getCart());
@@ -91,39 +91,61 @@ const Checkout = () => {
         {cart.length === 0 ? (
           <p>Votre panier est vide.</p>
         ) : (
-          <div className="mx-auto" style={{ maxWidth: 600 }}>
-            <form onSubmit={handleSubmit}>
-              <div className="mb-3">
-                <label className="form-label">Adresse de livraison</label>
-                <textarea className="form-control" value={adresse} onChange={(e) => setAdresse(e.target.value)} required />
-              </div>
+          <div className="row">
+            <div className="col-12 col-md-7 mb-4">
+              <div className="card shadow-sm">
+                <div className="card-body">
+                  <form onSubmit={handleSubmit}>
+                    <div className="mb-3">
+                      <label className="form-label">Adresse de livraison</label>
+                      <textarea className="form-control" value={adresse} onChange={(e) => setAdresse(e.target.value)} required />
+                    </div>
 
-              <div className="mb-3">
-                <label className="form-label">Numéro de téléphone</label>
-                <input
-                  type="tel"
-                  className="form-control"
-                  value={telephone}
-                  onChange={(e) => setTelephone(e.target.value)}
-                  placeholder="Ex: +243xxxxxxxxx"
-                  required
-                />
-              </div>
+                    <div className="mb-3">
+                      <label className="form-label">Numéro de téléphone</label>
+                      <input
+                        type="tel"
+                        className="form-control"
+                        value={telephone}
+                        onChange={(e) => setTelephone(e.target.value)}
+                        placeholder="Ex: +243600000000"
+                        required
+                      />
+                    </div>
 
-              <div className="mb-3">
-                <label className="form-label">Récapitulatif</label>
-                <ul className="list-group mb-3">
-                  {cart.map((it) => (
-                    <li key={it.id} className="list-group-item d-flex justify-content-between align-items-center">
-                      <span>{it.nom} x {it.quantite}</span>
-                      <strong>{(Number(it.prix) * Number(it.quantite)).toFixed(0)} $</strong>
-                    </li>
-                  ))}
-                </ul>
+                    <div className="d-grid d-md-block">
+                      <button className="btn btn-success w-100 w-md-auto" type="submit" disabled={loading}>{loading ? 'Envoi...' : 'Payer et valider la commande'}</button>
+                    </div>
+                  </form>
+                </div>
               </div>
+            </div>
 
-              <button className="btn btn-success" disabled={loading}>{loading ? 'Envoi...' : 'Payer et valider la commande'}</button>
-            </form>
+            <div className="col-12 col-md-5">
+              <div className="card shadow-sm">
+                <div className="card-body">
+                  <h5 className="card-title">Récapitulatif de la commande</h5>
+                  <div className="list-group mb-3">
+                    {cart.map((it) => (
+                      <div key={it.id} className="list-group-item d-flex justify-content-between align-items-center small">
+                        <div>
+                          <div className="fw-bold">{it.nom}</div>
+                          <div className="text-muted">Quantité: {it.quantite}</div>
+                        </div>
+                        <div className="text-end">{(Number(it.prix) * Number(it.quantite)).toFixed(0)} $</div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="d-flex justify-content-between align-items-center mb-2">
+                    <strong>Total</strong>
+                    <strong>{getTotalPrice().toFixed(0)} $</strong>
+                  </div>
+
+                  <div className="text-muted small">Les frais de livraison seront calculés séparément si applicable.</div>
+                </div>
+              </div>
+            </div>
           </div>
         )}
       </div>

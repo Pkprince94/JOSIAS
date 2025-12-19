@@ -11,20 +11,19 @@ const Home = () => {
 // la partie qui me fait trop bosser
   return (
 
-    <div className="Navbar">
+    <div>
       <Navbar/>
     <div className="bg-light py-5">
       <div className="container">
         <div className="row align-items-center mb-5">
-          <div className="col-md-6" data-aos="fade-right">
-            <h1 className="h">Bienvenue sur <span className="ns">PrinceKisMotoShop</span>-L'univers des passionnes de motos!</h1>
-            <div className="PJ">Merci de nous rendre visite ! Explorez notre boutique dediee a la puissance et au style</div>
+          <div className="col-12 col-md-6 mb-4 mb-md-0" data-aos="fade-right">
+            <h1 className="display-5 fw-bold">Bienvenue sur <span className="ns">PrinceKisMotoShop</span></h1>
+            <p className="h6 text-muted mb-3">L'univers des passionnés de motos — puissance et style</p>
             <p className="lead">La meilleure boutique en ligne de <strong>motos</strong> et <strong>pièces détachées</strong>.</p>
-            <a href="/Afficher" className="btn-kismoto-link">Explorer la boutique</a>
-
+            <a href="/Afficher" className="btn btn-primary btn-lg">Explorer la boutique</a>
           </div>
-          <div className="col-md-6 text-center" data-aos="fade-left">
-            <img src="./p2.jpg" className="img-fluid rounded shadow" alt="Moto" />
+          <div className="col-12 col-md-6 text-center" data-aos="fade-left">
+            <img src="./p2.jpg" className="img-fluid rounded shadow" alt="Moto" style={{maxHeight: 320, width: 'auto'}} />
           </div>
         </div>
 
