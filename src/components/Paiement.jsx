@@ -1,3 +1,4 @@
+
 <form action="https://marchand.maishapay.online/payment/vers1.0/merchant/checkout" method="POST">
   <input type="hidden" name="gatewayMode" value=0>  // required, 0 : SandBox 1 : Live
   <input type="hidden" name="publicApiKey" value="MP-LIVEPK-FUaorbsYg9LQyPuVWq3/2yelYopZz$3bu2weHuBryyqyPsfN04TvgMr/fNbG7422734Go0pl3cEer$aiQjtDvRs$T4$8u60uwoHX.11OBtc5.jFIF$sdeQ$M">// required
