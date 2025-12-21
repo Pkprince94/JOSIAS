@@ -37,11 +37,7 @@ const Checkout = () => {
 
     setLoading(true);
 
-    if (!telephone || telephone.trim().length < 6) {
-      alert('Veuillez fournir un numéro de téléphone valide.');
-      return;
-    }
-
+    
     try {
       for (const item of cart) {
         const commande = {
@@ -149,7 +145,7 @@ const Checkout = () => {
 
 
                     <div className="d-grid d-md-block">
-                      <button className="btn btn-success w-100 w-md-auto" type="submit" disabled={loading}>{loading ? 'Envoi...' : 'Payer et valider la commande'}</button>
+                      <input  className="btn btn-success w-100 w-md-auto" type="submit" value="payer" />
                     </div>
                   </form>
                 </div>
