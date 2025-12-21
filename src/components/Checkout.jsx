@@ -51,8 +51,7 @@ const Checkout = () => {
 
         const res = await fetch('https://marchand.maishapay.online/payment/vers1.0/merchant/checkout', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(commande),
+      
         });
 
         const texte = await res.text();
