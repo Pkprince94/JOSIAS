@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getCart, removeFromCart, updateQuantity, getTotalPrice } from '../utils/cart';
 import Navbar from './Navbar';
+import './Panier.css';
 
 const Panier = () => {
   const [cart, setCart] = useState(getCart());
@@ -46,7 +47,8 @@ const Panier = () => {
           <p>Votre panier est vide.</p>
         ) : (
           <div>
-            <table className="table">
+            <div className="table-responsive">
+              <table className="table">
               <thead>
                 <tr>
                   <th>Produit</th>
@@ -68,7 +70,8 @@ const Panier = () => {
                               : `https://princekismotoshop.alwaysdata.net/photo/${item.photo}`
                           }
                           alt={item.nom}
-                          style={{ width: 70, height: 50, objectFit: 'cover' }}
+                          className="cart-img img-fluid"
+                          style={{ objectFit: 'cover' }}
                         />
                         <div>{item.nom}</div>
                       </div>
@@ -81,8 +84,7 @@ const Panier = () => {
                         max={item.quantite_stock || 9999}
                         value={item.quantite}
                         onChange={(e) => handleQtyChange(item.id, e.target.value)}
-                        className="form-control"
-                        style={{ width: 100 }}
+                        className="form-control qty-input"
                       />
                     </td>
                     <td className="align-middle">{(Number(item.prix) * Number(item.quantite)).toFixed(0)} $</td>
@@ -94,7 +96,8 @@ const Panier = () => {
                   </tr>
                 ))}
               </tbody>
-            </table>
+              </table>
+            </div>
 
             <div className="d-flex justify-content-end align-items-center gap-3 mt-3">
               <h5>Total: {getTotalPrice().toFixed(0)} $</h5>

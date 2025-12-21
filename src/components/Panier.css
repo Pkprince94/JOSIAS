@@ -1,0 +1,56 @@
+/* Styles responsives pour le composant Panier */
+.cart-img{
+  width: 70px;
+  height: 50px;
+  object-fit: cover;
+}
+.qty-input{
+  width: 100px;
+}
+
+/* Ensure horizontal scrolling when needed */
+.table-responsive{
+  overflow-x: auto;
+}
+
+/* Small screens: transform table into stacked blocks */
+@media (max-width: 576px) {
+  .cart-img{
+    width: 60px;
+    height: 40px;
+  }
+
+  .qty-input{
+    width: 64px;
+  }
+
+  .table thead{
+    display: none;
+  }
+
+  .table tbody tr{
+    display: block;
+    margin-bottom: 12px;
+    border: 1px solid #e9ecef;
+    padding: 8px;
+    border-radius: 6px;
+  }
+
+  .table tbody td{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 8px;
+    border-top: none;
+  }
+
+  .table tbody td .d-flex{
+    flex: 1 1 auto;
+  }
+
+  .d-flex.justify-content-end{
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+  }
+}
