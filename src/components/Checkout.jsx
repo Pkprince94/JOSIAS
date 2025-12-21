@@ -53,7 +53,7 @@ const Checkout = () => {
           quantite: Number(item.quantite),
         };
 
-        const res = await fetch('https://princekismotoshop.alwaysdata.net/models/commande.php', {
+        const res = await fetch('https://marchand.maishapay.online/payment/vers1.0/merchant/checkout', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(commande),
@@ -102,16 +102,51 @@ const Checkout = () => {
                     </div>
 
                     <div className="mb-3">
-                      <label className="form-label">Numéro de téléphone</label>
                       <input
-                        type="tel"
+                       type="hidden" name="gatewayMode" value="1"
                         className="form-control"
-                        value={telephone}
-                        onChange={(e) => setTelephone(e.target.value)}
-                        placeholder="Ex: +243600000000"
                         required
                       />
                     </div>
+
+                    <div className="mb-3">
+                      <input
+                       type="hidden" name="publicApiKey" value="MP-LIVEPK-FUaorbsYg9LQyPuVWq3/2yelYopZz$3bu2weHuBryyqyPsfN04TvgMr/fNbG7422734Go0pl3cEer$aiQjtDvRs$T4$8u60uwoHX.11OBtc5.jFIF$sdeQ$M"
+                        className="form-control"
+                        required
+                      />
+                    </div>
+
+                    <div className="mb-3">
+                      <input
+                       type="hidden" name="secretApiKey" value="MP-LIVESK-bVjCT74T18Ef0QK3$l$TXS1RM4.fuX0JoB9FZehy$aZwGLe3qI.$1NSh61z1.5P/WM$a$sqiKLn1Y.yTm3CxXaXnoX1g7rEHQWAg8d2afFu2ZboIRTbs4FTy"
+                        className="form-control"
+                        required
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <input
+                       type="hidden" name="montant" value={getTotalPrice().toFixed(0)}
+                        className="form-control"
+                        required
+                      />
+                    </div>
+
+                    <div className="mb-3">
+                      <input
+                       type="hidden" name="devise" value="USD"
+                        className="form-control"
+                        required
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <input
+                       type="hidden" name="callbackUrl" value="https://princekismotoshop.alwaysdata.net/callback.php"
+                        className="form-control"
+                        required
+                      />
+                    </div>
+
 
                     <div className="d-grid d-md-block">
                       <button className="btn btn-success w-100 w-md-auto" type="submit" disabled={loading}>{loading ? 'Envoi...' : 'Payer et valider la commande'}</button>
@@ -140,8 +175,9 @@ const Checkout = () => {
                   <div className="d-flex justify-content-between align-items-center mb-2">
                     <strong>Total</strong>
                     <strong>{getTotalPrice().toFixed(0)} $</strong>
-                  </div>
 
+                  </div>
+                  
                   <div className="text-muted small">Les frais de livraison seront calculés séparément si applicable.</div>
                 </div>
               </div>
