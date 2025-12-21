@@ -108,11 +108,11 @@ const Panier = () => {
               <input type="hidden" name="montant" value={getTotalPrice().toFixed(0)}>
               <input type="hidden" name="devise" value="USD">
               <input type="hidden" name="callbackUrl" value="">
-              <input type="submit" value="Payer">
+              <input className="btn btn-success" type="submit" value="Payer">
             </form>
             
               <button className="btn btn-success" onClick={handleCheckout}>
-                Passer au paiement
+                Passer au paiement ppp
               </button>
             </div>
           </div>
