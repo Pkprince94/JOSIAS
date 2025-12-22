@@ -82,16 +82,6 @@ const Checkout = () => {
             />
           </div>
 
-          <div className="mb-3">
-            <label>Téléphone</label>
-            <input
-              className="form-control"
-              value={telephone}
-              onChange={(e) => setTelephone(e.target.value)}
-              required
-            />
-          </div>
-
           <button
             className="btn btn-success w-100"
             type="submit"
