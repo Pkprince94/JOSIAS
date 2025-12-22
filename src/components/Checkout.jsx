@@ -51,7 +51,7 @@ const Checkout = () => {
 
         const res = await fetch('https://marchand.maishapay.online/payment/vers1.0/merchant/checkout', {
           method: 'POST',
-      
+          
         });
 
         const texte = await res.text();
@@ -68,7 +68,9 @@ const Checkout = () => {
 
       clearCart();
       alert('Commande(s) envoyée(s) avec succès !');
-      navigate('/histoire');
+      
+
+      navigate('https://marchand.maishapay.online/payment/vers1.0/merchant/checkout');
     } catch (err) {
       console.error('Erreur lors du paiement :', err);
       alert('Erreur lors du paiement : ' + (err.message || err));
