@@ -18,7 +18,7 @@ const Checkout = () => {
   }, [navigate]);
 
   // Paiement
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     if (!cart || cart.length === 0) {
@@ -29,40 +29,16 @@ const Checkout = () => {
     setLoading(true);
 
     try {
-      const response = await fetch(
-        'https://princekismotoshop.alwaysdata.net/models/createCheckout.php',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            montant: getTotalPrice().toFixed(0),
-            devise: 'USD',
-          }),
-        }
-      );
+      // Récupération montant
+      const montant = getTotalPrice().toFixed(0);
+      const devise = 'USD';
 
-      // Toujours lire la réponse
-      const data = await response.json();
-      console.log('Réponse MaishaPay :', data);
-
-      // Recherche universelle de l’URL de paiement
-      const checkoutUrl =
-        data.checkoutUrl ||
-        data.paymentUrl ||
-        data.data?.checkoutUrl ||
-        data.data?.paymentUrl;
-
-      if (!checkoutUrl) {
-        throw new Error('URL de paiement introuvable');
-      }
-
-      // Nettoyage panier
+      // Nettoyage panier avant redirection
       clearCart();
 
-      // REDIRECTION VERS MAISHAPAY
-      window.location.href = checkoutUrl;
+      // 🔥 REDIRECTION DIRECTE VERS createCheckout.php
+      // Le serveur affichera directement la page de paiement
+      window.location.href = `https://princekismotoshop.alwaysdata.net/models/createCheckout.php?montant=${montant}&devise=${devise}`;
 
     } catch (error) {
       console.error('Erreur paiement :', error);
