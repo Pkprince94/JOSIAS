@@ -5,11 +5,10 @@ import { getCart, clearCart, getTotalPrice } from '../utils/cart';
 
 const Checkout = () => {
   const [cart] = useState(getCart());
-  const [adresse, setAdresse] = useState('');
-  const [telephone, setTelephone] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  // Vérification connexion
   useEffect(() => {
     const utilisateur = sessionStorage.getItem('utilisateur');
     if (!utilisateur) {
@@ -18,23 +17,25 @@ const Checkout = () => {
     }
   }, [navigate]);
 
+  // Paiement
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (cart.length === 0) {
+    if (!cart || cart.length === 0) {
       alert('Panier vide.');
       return;
     }
 
-    const utilisateur = JSON.parse(sessionStorage.getItem('utilisateur'));
     setLoading(true);
 
     try {
-      const res = await fetch(
+      const response = await fetch(
         'https://princekismotoshop.alwaysdata.net/models/createCheckout.php',
         {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: {
+            'Content-Type': 'application/json',
+          },
           body: JSON.stringify({
             montant: getTotalPrice().toFixed(0),
             devise: 'USD',
@@ -42,19 +43,30 @@ const Checkout = () => {
         }
       );
 
-      const data = await res.json();
+      // Toujours lire la réponse
+      const data = await response.json();
+      console.log('Réponse MaishaPay :', data);
 
-      if (!data.success || !data.checkoutUrl) {
-        throw new Error(data.message || 'Erreur de paiement');
+      // Recherche universelle de l’URL de paiement
+      const checkoutUrl =
+        data.checkoutUrl ||
+        data.paymentUrl ||
+        data.data?.checkoutUrl ||
+        data.data?.paymentUrl;
+
+      if (!checkoutUrl) {
+        throw new Error('URL de paiement introuvable');
       }
 
+      // Nettoyage panier
       clearCart();
 
-      window.location.href = data.checkoutUrl;
+      // REDIRECTION VERS MAISHAPAY
+      window.location.href = checkoutUrl;
 
-    } catch (err) {
-      console.error(err);
-      alert(err.message);
+    } catch (error) {
+      console.error('Erreur paiement :', error);
+      alert(error.message || 'Erreur lors du paiement');
     } finally {
       setLoading(false);
     }
@@ -63,17 +75,17 @@ const Checkout = () => {
   return (
     <>
       <Navbar />
+
       <div className="container py-5">
-        <h2>Informations de paiement</h2>
+        <h2 className="mb-4">Paiement</h2>
 
         <form onSubmit={handleSubmit}>
-
           <button
-            className="btn btn-success w-100"
             type="submit"
+            className="btn btn-success w-100"
             disabled={loading}
           >
-            {loading ? 'Redirection...' : 'Payer'}
+            {loading ? 'Redirection vers paiement...' : 'Payer'}
           </button>
         </form>
       </div>
