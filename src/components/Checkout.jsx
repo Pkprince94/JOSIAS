@@ -36,13 +36,8 @@ const Checkout = () => {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            user_id: utilisateur.id,
-            nom_client: utilisateur.nom,
-            adresse,
-            telephone,
             montant: getTotalPrice().toFixed(0),
             devise: 'USD',
-            produits: cart,
           }),
         }
       );
@@ -72,15 +67,6 @@ const Checkout = () => {
         <h2>Informations de paiement</h2>
 
         <form onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <label>Adresse de livraison</label>
-            <textarea
-              className="form-control"
-              value={adresse}
-              onChange={(e) => setAdresse(e.target.value)}
-              required
-            />
-          </div>
 
           <button
             className="btn btn-success w-100"
