@@ -31,7 +31,7 @@ const Checkout = () => {
 
     try {
       const res = await fetch(
-        'https://princekismotoshop.alwaysdata.net/api/createCheckout.php',
+        'https://princekismotoshop.alwaysdata.net/models/createCheckout.php',
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
