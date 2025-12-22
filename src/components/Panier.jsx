@@ -101,8 +101,6 @@ const Panier = () => {
 
             <div className="d-flex justify-content-end align-items-center gap-3 mt-3">
               <h5>Total: {getTotalPrice().toFixed(0)} $</h5>
-              
-            
               <button className="btn btn-success" onClick={handleCheckout}>
                 Passer au paiement
               </button>
