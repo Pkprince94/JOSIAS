@@ -35,10 +35,7 @@ const Checkout = () => {
 
       // Nettoyage panier avant redirection
       clearCart();
-
-      // 🔥 REDIRECTION DIRECTE VERS createCheckout.php
-      // Le serveur affichera directement la page de paiement
-      window.location.href = `https://princekismotoshop.alwaysdata.net/models/createCheckout.php?montant=${montant}&devise=${devise}`;
+      window.location.href = 'https://princekismotoshop.alwaysdata.net/models/createCheckout.php?montant=${montant}&devise=${devise}';
 
     } catch (error) {
       console.error('Erreur paiement :', error);
