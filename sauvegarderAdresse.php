@@ -25,11 +25,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 $input = json_decode(file_get_contents('php://input'), true);
 
 // Vérifications de base
-if (!isset($input['utilisateur_id']) || !isset($input['adresse'])) {
+if (!isset($input['utilisateur_id'])) {
     http_response_code(400);
     echo json_encode([
         "success" => false,
-        "message" => "Données manquantes (utilisateur_id ou adresse)"
+        "message" => "utilisateur_id manquant"
+    ]);
+    exit;
+}
+
+if (!isset($input['adresse'])) {
+    http_response_code(400);
+    echo json_encode([
+        "success" => false,
+        "message" => "adresse manquante"
     ]);
     exit;
 }
@@ -37,12 +46,22 @@ if (!isset($input['utilisateur_id']) || !isset($input['adresse'])) {
 $utilisateur_id = intval($input['utilisateur_id']);
 $adresse = trim($input['adresse']);
 
-// Validation de l'adresse
-if (empty($adresse) || strlen($adresse) < 5) {
+// Validation de l'utilisateur_id
+if ($utilisateur_id <= 0) {
     http_response_code(400);
     echo json_encode([
         "success" => false,
-        "message" => "L'adresse doit contenir au moins 5 caractères"
+        "message" => "utilisateur_id invalide"
+    ]);
+    exit;
+}
+
+// Validation de l'adresse
+if (empty($adresse)) {
+    http_response_code(400);
+    echo json_encode([
+        "success" => false,
+        "message" => "L'adresse ne peut pas être vide"
     ]);
     exit;
 }
@@ -54,22 +73,40 @@ try {
     $db = new Database();
     $pdo = $db->getConnection();
 
+    // Vérifier que l'utilisateur existe
+    $checkSql = "SELECT id FROM utilisateurs WHERE id = :id";
+    $checkStmt = $pdo->prepare($checkSql);
+    $checkStmt->bindParam(':id', $utilisateur_id, PDO::PARAM_INT);
+    $checkStmt->execute();
+
+    if ($checkStmt->rowCount() === 0) {
+        http_response_code(404);
+        echo json_encode([
+            "success" => false,
+            "message" => "Utilisateur non trouvé"
+        ]);
+        exit;
+    }
+
     // Mettre à jour l'adresse de l'utilisateur dans la table utilisateurs
     $sql = "UPDATE utilisateurs SET adresse = :adresse WHERE id = :id";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':adresse', $adresse, PDO::PARAM_STR);
     $stmt->bindParam(':id', $utilisateur_id, PDO::PARAM_INT);
     
-    if ($stmt->execute()) {
+    $result = $stmt->execute();
+    
+    if ($result) {
         echo json_encode([
             "success" => true,
-            "message" => "Adresse sauvegardée avec succès"
+            "message" => "Adresse sauvegardée avec succès",
+            "utilisateur_id" => $utilisateur_id
         ]);
     } else {
         http_response_code(500);
         echo json_encode([
             "success" => false,
-            "message" => "Erreur lors de la sauvegarde de l'adresse"
+            "message" => "Impossible de mettre à jour l'adresse"
         ]);
     }
 

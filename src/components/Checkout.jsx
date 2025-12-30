@@ -60,11 +60,13 @@ const Checkout = () => {
             clearCart();
             window.location.href = `https://princekismotoshop.alwaysdata.net/models/createCheckout.php?montant=${montant}&devise=${devise}`;
           } else {
-            alert('Erreur lors de la sauvegarde de l\'adresse');
+            alert('Erreur : ' + (data.message || 'Erreur lors de la sauvegarde de l\'adresse'));
+            setLoading(false);
           }
         })
         .catch(error => {
           alert('Erreur réseau : ' + error.message);
+          setLoading(false);
         });
 
     } catch (error) {
