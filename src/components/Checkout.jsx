@@ -42,15 +42,17 @@ const Checkout = () => {
       const utilisateurStr = sessionStorage.getItem('utilisateur');
       const utilisateur = JSON.parse(utilisateurStr);
 
-      // Envoi de l'adresse au serveur
-      fetch('https://princekismotoshop.alwaysdata.net/models/sauvegarderAdresse.php', {
+      // Envoi de l'adresse et du panier au serveur
+      fetch('https://princekismotoshop.alwaysdata.net/models/sauvegarderCommande.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
           utilisateur_id: utilisateur.id,
-          adresse: adresse
+          nom_client: utilisateur.nom,
+          adresse: adresse,
+          cart: cart
         })
       })
         .then(res => res.json())
