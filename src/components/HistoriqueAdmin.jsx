@@ -78,7 +78,6 @@ const HistoriqueAdmin = () => {
                   <th>Produit</th>
                   <th>Qté</th>
                   <th className="d-none d-lg-table-cell">Adresse</th>
-                  <th className="d-none d-sm-table-cell">Téléphone</th>
                   <th className="d-none d-xl-table-cell">Date</th>
                 </tr>
               </thead>
@@ -91,7 +90,6 @@ const HistoriqueAdmin = () => {
                     <td className="small">{cmd.nom_produit}</td>
                     <td>{cmd.quantite}</td>
                     <td className="d-none d-lg-table-cell small">{cmd.adresse}</td>
-                    <td className="d-none d-sm-table-cell small">{cmd.telephone || '—'}</td>
                     <td className="d-none d-xl-table-cell small">{new Date(cmd.date_commande).toLocaleString()}</td>
                   </tr>
                 ))}
