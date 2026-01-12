@@ -31,31 +31,40 @@ const ProductCard = ({ product }) => {
   };
 
   const handleVote = async (type) => {
-    const utilisateur = JSON.parse(sessionStorage.getItem("utilisateur"));
-    if (!utilisateur) {
+    const utilisateurStr = sessionStorage.getItem("utilisateur");
+    if (!utilisateurStr) {
       alert("Connectez-vous pour voter");
       return;
     }
 
     try {
+      const utilisateur = JSON.parse(utilisateurStr);
       const url = "https://princekismotoshop.alwaysdata.net/models/LikeDislike.php";
       const res = await fetch(url, {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ produit_id: product.id, type }),
+        body: JSON.stringify({ 
+          produit_id: product.id, 
+          utilisateur_id: utilisateur.id,
+          type 
+        }),
       });
+
+      if (!res.ok) {
+        throw new Error(`Erreur HTTP: ${res.status}`);
+      }
 
       const data = await res.json();
       if (data.success) {
-        setLikes(data.stats.likes);
-        setDislikes(data.stats.dislikes);
+        setLikes(data.stats?.likes || likes);
+        setDislikes(data.stats?.dislikes || dislikes);
       } else {
         alert(data.message || "Erreur lors du vote");
       }
     } catch (err) {
       console.error("Erreur réseau :", err);
-      alert("Erreur serveur");
+      alert("Erreur serveur: " + err.message);
     }
   };
 
